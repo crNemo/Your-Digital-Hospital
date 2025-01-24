@@ -1,8 +1,11 @@
 import React from 'react'
+import { parseAst } from 'vite'
 
 const App = () => {
   return (
-   pass
+    <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
   )
 }
 
