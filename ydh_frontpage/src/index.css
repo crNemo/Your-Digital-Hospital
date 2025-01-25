@@ -8,3 +8,12 @@
     --color-primary: #5f6FFF;
     
 }
+::-webkit-scrollbar{
+    @apply hidden
+}
+@layer utilities {
+    .grid-cols-auto {
+      @apply grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }

@@ -13,7 +13,7 @@ const Header = () => {
                     <img className='w-28' src={assets.group_profiles} alt="Group Profiles" />
                     <p >Schedule your appointments and keep your health in check!</p>
                 </div>
-                <a href="" className='flex items-center gap-2 bg-white px-8 py-5 rounded-full text-grey-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300 '>
+                <a href="#speciality" className='flex items-center gap-2 bg-white px-8 py-5 rounded-full text-grey-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300 '>
                     Book Appointment<img className='w-3' src={assets.arrow_icon} alt="Arrow Icon" /></a>
             </div>
             {/* Right side */}
