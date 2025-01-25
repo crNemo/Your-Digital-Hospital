@@ -20,6 +20,7 @@ const Doctors = () => {
     applyFilter()
   }, [doctors, speciality])
 
+
   return (
     <div>
       <p className='text-gray-600'>Browse through the doctors specialist.</p>
