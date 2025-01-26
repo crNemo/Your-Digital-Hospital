@@ -28,7 +28,7 @@ const Footer = () => {
                     <li>+977-9866600640</li>
                     <li>gautambishesh100@gmail.com</li>
                     <li>bibashthapa0707@gmail.com</li>
-                    <li>angleneupane09@gmail.com</li>
+                    <li>an.angel.neupane@gmail.com</li>
                 </ul>
             </div>
         </div>
