@@ -22,4 +22,9 @@
       @apply grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
+    @media (max-width: 740px) {
+        .active p{
+            @apply text-white bg-primary
+        }
+    }
   }
