@@ -36,6 +36,12 @@ import General_physician from './General_physician.svg'
 import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
+import bed1 from './bed1.png'
+import bed2 from './bed2.png'
+import bed3 from './bed3.png'
+import bed4 from './bed4.png'
+import bed5 from './bed5.png'
+import bed6 from './bed6.png'
 
 
 export const assets = {
@@ -295,5 +301,74 @@ export const doctors = [
             line1: '37th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
         }
+    },
+]
+
+export const beds = [
+    {
+        _id: 'bed1',
+        name: 'Operation Theatre 1',
+        detail: 'Bir hospital',
+        image: bed1,
+        speciality: 'Operation Theatre for Heart Surgery',
+        about: 'The operation theatre for heart surgery is a highly specialized, sterile environment equipped with advanced medical technology and instruments. It is designed to support complex cardiovascular procedures, ensuring precision, safety, and optimal patient outcomes. ',
+        fees: 500,
+        address: 'Kathmandu 44600',
+        contact: '01-4221119'
+    },
+    {
+        _id: 'bed2',
+        name: 'Pediatric Beds',
+        detail: 'Norvic International Hospital',
+        image: bed2,
+        speciality: 'Infant & Child Care',
+        about: 'Our pediatric hospital beds are designed with safety, comfort, and care in mind for infants, children, and adolescents. Featuring adjustable height, secure side rails, and child-friendly designs, our beds ensure a safe and soothing environment for young patients. Built to meet the highest standards of quality, these beds offer versatility for medical staff and comfort for children, making them an essential addition to any pediatric care facility.',
+        fees: 300,
+        address: 'Kathmandu 44617, Nepal',
+        contact: '+977 1-4258554'
+    },
+    {
+        _id: 'bed3',
+        name: ' ICU Bed',
+        detail: 'Star Hospital',
+        image: bed3,
+        speciality: 'Intensive Care Unit',
+        about: 'Our ICU beds are engineered to provide maximum functionality, comfort, and care for critically ill patients. Designed with advanced features such as multi-position adjustability, cardiac chair configurations, and easy mobility, these beds ensure optimal patient support and convenience for medical staff. With a focus on durability, safety, and innovative technology, our ICU beds are the ideal solution for intensive care units, enhancing patient recovery and improving caregiver efficiency.',
+        fees: 0,
+        address: 'Ring Rd 640, Lalitpur 44600',
+        contact: '01-5450198'
+    },
+    {
+        _id: 'bed4',
+        name: 'Birthing Bed',
+        detail: 'Bir hospital',
+        image: bed4,
+        speciality: 'Birth & Labor',
+        about: 'Our birthing beds are designed to provide comfort, support, and functionality throughout every stage of labor and delivery. With adjustable positions, ergonomic design, and easy mobility, these beds cater to the needs of both the mother and healthcare providers. Built with features like height adjustment, foldable foot sections, and secure locking mechanisms, our birthing beds ensure a safe and comfortable experience. They combine durability with innovative technology to support a smooth and efficient birthing process.',
+        fees: 100,
+        address: 'Kathmandu 44600',
+        contact: '01-4221119'
+    },
+    {
+        _id: 'bed5',
+        name: 'Ventilator',
+        detail: 'Nepal Mediciti',
+        image: bed5,
+        speciality: 'Ventialtion Support',
+        about: 'Our ventilators are advanced, life-support systems designed to assist patients with respiratory difficulties. Equipped with cutting-edge technology, they provide precise control over oxygen delivery, ventilation modes, and pressure settings to meet individual patient needs. Ideal for ICU, emergency, and long-term care, our ventilators ensure reliability, ease of use, and patient safety. Built for both adult and pediatric care, they offer a critical solution to support breathing and enhance recovery in challenging medical situations.',
+        fees: 1000,
+        address: 'Bhaisepati Lalitpur, Nepal',
+        contact: '+977 1 4217766'
+    },
+    {
+        _id: 'bed6',
+        name: 'Orthopaedic Traction Beds',
+        detail: 'Grande International Hospital',
+        image: bed6,
+        speciality: 'Bones & Joints',
+        about: 'Our orthopedic traction beds are designed to provide precise support and stabilization for patients requiring traction therapy. Equipped with adjustable frames, sturdy construction, and user-friendly controls, these beds ensure optimal alignment and patient comfort during treatment. They are ideal for managing fractures, dislocations, and other orthopedic conditions, offering a reliable solution for effective recovery. With a focus on durability and functionality, our traction beds enhance patient care and simplify procedures for medical staff.',
+        fees: 700,
+        address: 'Dhapasi Kathmandu, Nepal',
+        contact: '+977 9801202550'
     },
 ]
