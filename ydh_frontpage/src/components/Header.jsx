@@ -14,7 +14,7 @@ const Header = () => {
                     <p >Schedule your appointments and keep your health in check!</p>
                 </div>
                 <a href="#speciality" className='flex items-center gap-2 bg-white px-8 py-5 rounded-full text-grey-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300 '>
-                    Book Appointment<img className='w-3' src={assets.arrow_icon} alt="Arrow Icon" /></a>
+                    Emergency <img className='w-3' src={assets.arrow_icon} alt="Arrow Icon" /></a>
             </div>
             {/* Right side */}
             <div className='md:w-1/2 relative'>

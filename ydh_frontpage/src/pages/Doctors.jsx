@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
+import { assets } from '../assets/assets'
+
 
 const Doctors = () => {
   const { speciality } = useParams();
   const [filterDoc, setFilterDoc] = useState([]);
   const [showFilter,setShowFilter] = useState(false);
-  const { doctors } = useContext(AppContext);
+  const { doctors, calculateRating} = useContext(AppContext);
   const navigate = useNavigate();
 
   const applyFilter = () => {
@@ -46,6 +48,20 @@ const Doctors = () => {
                   <p className='text-gray-900 text-lg font-medium'>{item.name}</p>
                   <p className='text-gray-600 text-sm'>{item.speciality}</p>
                 </div>
+                <div className="flex items-center space-x-2 pl-4">
+                            <p>{item && item.reviews && Array.isArray(item.reviews) && item.reviews.length > 0 ? calculateRating(item) : 'No Rating'}</p>
+                            <div className="flex items-center space-x-1">
+                                {[...Array(5)].map((_, i) => (
+                                    <img
+                                        key={i}
+                                        src={i < Math.floor(calculateRating(item)) ? assets.star : assets.star_blank}
+                                        alt='star'
+                                        className="w-3.5 h-3.5"
+                                    />
+                                ))}
+                            </div>
+                            <p className="text-gray-600">({item.reviews ? item.reviews.length : 0})</p>
+                  </div>
               </div>
             ))
           }
