@@ -42,7 +42,8 @@ import bed3 from './bed3.png'
 import bed4 from './bed4.png'
 import bed5 from './bed5.png'
 import bed6 from './bed6.png'
-
+import star from './star.svg'
+import star_blank from './star_blank.svg'
 
 export const assets = {
     appointment_img,
@@ -61,7 +62,9 @@ export const assets = {
     dropdown_icon,
     upload_icon,
     stripe_logo,
-    razorpay_logo
+    razorpay_logo,
+    star,
+    star_blank
 }
 
 export const specialityData = [
@@ -104,7 +107,12 @@ export const doctors = [
         address: {
             line1: '17th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        reviews: [
+            { rating: 4, comment: 'Great doctor!' },
+            { rating: 5, comment: 'Very knowledgeable.' },
+            { rating: 4, comment: 'Highly recommend.' }
+        ]
     },
     {
         _id: 'doc2',
@@ -118,7 +126,11 @@ export const doctors = [
         address: {
             line1: '27th Cross, Richmond',
             line2: 'Circle, Ring Road, London'
-        }
+        },
+        reviews: [
+            { rating: 5, comment: 'Excellent care.' },
+            { rating: 4, comment: 'Very caring and professional.' }
+        ]
     },
     {
         _id: 'doc3',
@@ -372,3 +384,24 @@ export const beds = [
         contact: '+977 9801202550'
     },
 ]
+
+export const dummyTestimonial = [
+    {
+        name: 'Donald Jackman',
+        role: 'SWE 1 @ Amazon',
+        rating: 5,
+        feedback: 'I\'ve been using Imagify for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.',
+    },
+    {
+        name: 'Richard Nelson',
+        role: 'SWE 2 @ Samsung',
+        rating: 4,
+        feedback: 'I\'ve been using Imagify for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.',
+    },
+    {
+        name: 'James Washington',
+        role: 'SWE 2 @ Google',
+        rating: 4.5,
+        feedback: 'I\'ve been using Imagify for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.',
+    },
+];

@@ -25,7 +25,7 @@ const MyProfile = () => {
 
       {
         isEdit
-          ? <input className='bg-gray-50 text-3xl font-medium max-w-60 mt-4' type="text" value={userData.name} onChnage={e => setUserData(prev => ({ ...prev, name: e.target.value }))} />
+          ? <input className='bg-gray-50 text-3xl font-medium max-w-60 mt-4' type="text" value={userData.name} onChange={e => setUserData(prev => ({ ...prev, name: e.target.value }))} />
           : <p className='font-medium text-3xl text-neutral-800 mt-4'>{userData.name}</p>
       }
 
@@ -38,16 +38,16 @@ const MyProfile = () => {
           <p className='font-medium'>Phone:</p>
           {
             isEdit
-              ? <input className='bg-gray-100 max-w-52' type="text" value={userData.phone} onChnage={e => setUserData(prev => ({ ...prev, phone: e.target.value }))} />
+              ? <input className='bg-gray-100 max-w-52' type="text" value={userData.phone} onChange={e => setUserData(prev => ({ ...prev, phone: e.target.value }))} />
               : <p className='text-blue-400'>{userData.phone}</p>
           }
           <p className='font-medium'>Address</p>
           {
             isEdit
               ? <p>
-                <input className='bg-gray-50' onChnage={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, lin1: e.target.value } }))} value={userData.address.lin1} type="text" />
+                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, lin1: e.target.value } }))} value={userData.address.lin1} type="text" />
                 <br />
-                <input className='bg-gray-50' onChnage={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, lin2: e.target.value } }))} value={userData.address.lin2} type="text" />
+                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, lin2: e.target.value } }))} value={userData.address.lin2} type="text" />
               </p>
               : <p className='text-gray-500'>
                 {userData.address.lin1}
