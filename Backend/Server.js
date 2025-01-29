@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import adminRouter from './routes/adminRoute.js';
+import notificationDB from './models/notificationModel.js'
 
 // Load environment variables from .env file
 dotenv.config();
@@ -23,9 +24,34 @@ app.use(cors());
 // api endpoints
 app.use('/api/admin', adminRouter);
 
+app.get('/api/notification',async(req,res)=>{
+    const Data = await notificationDB.find()
+
+    res.send(Data)
+    
+})
+app.post('/api/create',async(req,res)=>{
+
+    const title = req.body.title
+    const body = req.body.body
+
+    const DataToSave = {
+        title,
+        body,
+        date:Date.now()
+    } 
+    
+    const SavedInfo = new notificationDB(DataToSave)
+    await SavedInfo.save()
+    
+
+})
+
 app.get('/', (req, res) => {
     res.send('API WORKING');
 });
 
 // Start the server
-app.listen(port, () => console.log("Server is running on port",port));
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
