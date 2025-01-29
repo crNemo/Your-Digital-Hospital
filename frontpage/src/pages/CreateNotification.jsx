@@ -7,8 +7,8 @@ const Login = () => {
     const [name, setName] = useState('');
 
     let ParsedData = {
-        "title":"",
-        "body":"",
+        "title": "",
+        "body": "",
     }
 
     const onSubmitHandler = async (event) => {
@@ -27,10 +27,10 @@ const Login = () => {
                             className='border border-zinc-30 rounded w-full p-2 mt-1'
                             type="text"
                             onChange={(e) => ParsedData.title = e.target.value}
-                        
-                          
+
+
                             required
-                            
+
                         />
                     </div>
                 )}
@@ -38,23 +38,23 @@ const Login = () => {
                     <p>Body</p>
                     <textarea
                         className='border border-zinc-30 rounded w-full p-2 mt-1 h-[200px] overflow-y-auto'
-                        onChange={(e)=> ParsedData.body = e.target.value}
+                        onChange={(e) => ParsedData.body = e.target.value}
                         required
                     />
                 </div>
-        
-                <button className='bg-primary text-white w-full py-2 rounded-mg text-base' onClick={async()=>{
-                    await fetch('http://localhost:4000/api/create',{
-                        method:"POST",
+
+                <button className='bg-primary text-white w-full py-2 rounded-mg text-base' onClick={async () => {
+                    await fetch('http://localhost:4000/api/create', {
+                        method: "POST",
                         headers: {
-                            "Content-Type": "application/json", 
+                            "Content-Type": "application/json",
                         },
-                        body:JSON.stringify(ParsedData)
+                        body: JSON.stringify(ParsedData)
                     })
                 }}>
                     Post
                 </button>
-                
+
             </div>
         </form>
     );
