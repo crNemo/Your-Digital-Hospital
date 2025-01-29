@@ -12,7 +12,8 @@ import Bed from './pages/Bed'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import BedAppointment from './pages/BedAppointment'
-
+import Notifications from './pages/Notifications'
+import CreateNotification from './pages/CreateNotification'
 const App = () => {
   return (
     <div className='mx-4 sm:mx-[10%]'>
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/doctors' element={<Doctors />} />
         <Route path='/doctors/:speciality' element={<Doctors />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/create' element={<CreateNotification/>}/>
         <Route path='/contact' element={<Contact />} />
         <Route path='/ambulance' element={<Ambulance />} />
         <Route path='/my-profile' element={<MyProfile />} />
@@ -29,6 +31,7 @@ const App = () => {
         <Route path='/appointment/:docId' element={<Appointment />} />
         <Route path='/bed' element={<Bed />} />
         <Route path='/bed-appointment/:bedId' element={<BedAppointment />} />
+        <Route path='/notifications' element={<Notifications/>} />
       </Routes>
       <Footer />
     </div>
