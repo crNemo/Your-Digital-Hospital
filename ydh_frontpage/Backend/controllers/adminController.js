@@ -1,13 +1,13 @@
 import validator from "validator"
 import bcrypt from 'bcrypt'
 import {v2 as cloudinary} from 'cloudinary'
-
+import Doctor from "../models/doctorModel.js"
 
 // API for adding doctor 
 const addDoctor = async (req,res) => {
 
     try{
-        const {name, email, password, image, speciality, degree, experience, about, fees, address} = req.body
+        const {name, email, password, speciality, degree, experience, about, fees, address} = req.body
         const imageFile = req.file
         // checking for all data to add doctor
         if(!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address){
@@ -41,7 +41,7 @@ const addDoctor = async (req,res) => {
             experience, 
             about,
             fees,
-            address:JSON.parse(address),
+            address,
             date: Date.now()
 
         }
@@ -52,9 +52,9 @@ const addDoctor = async (req,res) => {
 
 
 
-    } catch (errot) {
+    } catch (error) {
         console.log(error)  
-        res.json({success: false, message: "error.message"})
+        res.json({success: false, message: `${error.message}`})
 
     }
 } 
