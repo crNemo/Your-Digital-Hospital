@@ -1,17 +1,47 @@
-import React, { createContext, useState, useEffect } from "react";
-import { doctors as doctorsData } from "../assets/assets";
+import { createContext, useState, useEffect } from "react";
 import { beds } from "../assets/assets";
+import axios from "axios";
+import { toast } from 'react-toastify'
 
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
   const currencySymbol = 'NRs';
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const value ={
+    doctors,
+    currencySymbol
+  }
+
+  const getDoctorsData = async () => {
+    try {
+      
+      const {data} = await axios.get(backendUrl + '/api/doctor/list');
+
+      if (data.success) {
+        setDoctors(data.doctors);
+      }else{
+        toast.error(data.message)
+      }
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+  }
+
+  useEffect(()=>{
+    getDoctorsData()
+  },[])
+
+
+
   useEffect(() => {
     // Simulate fetching data
+    const doctorsData = []; // Define doctorsData here
     setTimeout(() => {
       setDoctors(doctorsData);
       setLoading(false);

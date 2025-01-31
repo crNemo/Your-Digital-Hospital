@@ -14,9 +14,11 @@ import Footer from './components/Footer'
 import BedAppointment from './pages/BedAppointment'
 import Notifications from './pages/Notifications'
 import CreateNotification from './pages/CreateNotification'
+import { ToastContainer, toast } from 'react-toastify';
 const App = () => {
   return (
     <div className='mx-4 sm:mx-[10%]'>
+      <ToastContainer />
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
