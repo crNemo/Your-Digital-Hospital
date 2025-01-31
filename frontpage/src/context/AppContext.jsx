@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import { beds } from "../assets/assets";
 import axios from "axios";
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 
 export const AppContext = createContext();
 
@@ -9,57 +8,75 @@ const AppContextProvider = (props) => {
   const currencySymbol = 'NRs';
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [doctors, setDoctors] = useState([]);
+  const [beds, setBeds] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const value ={
+  const value = {
     doctors,
-    currencySymbol
-  }
+    beds,
+    currencySymbol,
+    loading,
+    calculateRating: (doctor) => {
+      if (!doctor.reviews || doctor.reviews.length === 0) return 0;
+      const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
+      return totalRating / doctor.reviews.length;
+    }
+  };
 
   const getDoctorsData = async () => {
     try {
-      
-      const {data} = await axios.get(backendUrl + '/api/doctor/list');
+      const { data } = await axios.get(`${backendUrl}/api/doctor/list`);
 
       if (data.success) {
         setDoctors(data.doctors);
-      }else{
-        toast.error(data.message)
+      } else {
+        toast.error(data.message);
       }
-
     } catch (error) {
-      console.log(error)
-      toast.error(error.message)
+      if (error.response) {
+        toast.error(`Request failed with status code ${error.response.status}: ${error.response.data.message}`);
+      } else if (error.request) {
+        toast.error('No response received from server');
+      } else {
+        toast.error(error.message);
+      }
     }
-  }
-
-  useEffect(()=>{
-    getDoctorsData()
-  },[])
-
-
-
-  useEffect(() => {
-    // Simulate fetching data
-    const doctorsData = []; // Define doctorsData here
-    setTimeout(() => {
-      setDoctors(doctorsData);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  // Function to calculate the average rating
-  const calculateRating = (doctor) => {
-    if (!doctor || !doctor.reviews || doctor.reviews.length === 0) {
-      return 0;
-    }
-    const totalReviews = doctor.reviews.length;
-    const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
-    return totalReviews ? (totalRating / totalReviews).toFixed(1) : 0;
   };
 
+  const getBedsData = async () => {
+    console.log("Fetching beds data...");
+    console.log("Backend URL:", backendUrl);
+
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/bed/list`);
+      console.log("Beds data received:", data);
+
+      if (data.success) {
+        setBeds(data.beds);
+        console.log("Beds state updated:", data.beds);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+      if (error.response) {
+        toast.error(`Request failed with status code ${error.response.status}: ${error.response.data.message}`);
+      } else if (error.request) {
+        toast.error('No response received from server');
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getDoctorsData();
+    getBedsData();
+    setLoading(false);
+  }, []);
+
   return (
-    <AppContext.Provider value={{ doctors, calculateRating, loading, beds, currencySymbol }}>
+    <AppContext.Provider value={value}>
       {props.children}
     </AppContext.Provider>
   );

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Server.js", 
+    "start": "node Server.js",
     "server": "nodemon Server.js"
   },
   "author": "",
@@ -21,6 +21,7 @@
     "mongoose": "^8.9.5",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.9",
+    "react-toastify": "^11.0.3",
     "validator": "^13.12.0"
   }
 }

@@ -24,7 +24,7 @@ app.use(cors());
 
 // api endpoints
 app.use('/api/admin', adminRouter);
-app.use('/api/doctor',doctorRouter)
+app.use('/api/doctor',doctorRouter);
 
 app.get('/api/notification',async(req,res)=>{
     const Data = await notificationDB.find()
