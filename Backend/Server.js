@@ -6,6 +6,7 @@ import connectCloudinary from './config/cloudinary.js';
 import adminRouter from './routes/adminRoute.js';
 import notificationDB from './models/notificationModel.js'
 import doctorRouter from './routes/doctorRoute.js';
+import userRouter from './routes/userRoute.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -25,6 +26,7 @@ app.use(cors());
 // api endpoints
 app.use('/api/admin', adminRouter);
 app.use('/api/doctor',doctorRouter);
+app.use('/api/user',userRouter)
 
 app.get('/api/notification',async(req,res)=>{
     const Data = await notificationDB.find()

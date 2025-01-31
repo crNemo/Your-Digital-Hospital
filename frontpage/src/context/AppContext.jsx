@@ -10,17 +10,18 @@ const AppContextProvider = (props) => {
   const [doctors, setDoctors] = useState([]);
   const [beds, setBeds] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [token,setToken] = useState('')
 
   const value = {
     doctors,
     beds,
     currencySymbol,
     loading,
-    calculateRating: (doctor) => {
-      if (!doctor.reviews || doctor.reviews.length === 0) return 0;
-      const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
-      return totalRating / doctor.reviews.length;
-    }
+  calculateRating: (doctor) => {
+    if (!doctor.reviews || doctor.reviews.length === 0) return 0;
+    const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalRating / doctor.reviews.length;
+  }
   };
 
   const getDoctorsData = async () => {
@@ -42,6 +43,9 @@ const AppContextProvider = (props) => {
       }
     }
   };
+
+  
+  
 
   const getBedsData = async () => {
     console.log("Fetching beds data...");
