@@ -10,19 +10,15 @@ const AppContextProvider = (props) => {
   const [doctors, setDoctors] = useState([]);
   const [beds, setBeds] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token')?localStorage.getItem('token'):false);
 
-  const value = {
-    doctors,
-    beds,
-    currencySymbol,
-    loading,
-    calculateRating: (doctor) => {
-      if (!doctor.reviews || doctor.reviews.length === 0) return 0;
-      const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
-      return totalRating / doctor.reviews.length;
-    }
+  const calculateRating = (doctor) => {
+    if (!doctor.reviews || doctor.reviews.length === 0) return 0;
+    const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalRating / doctor.reviews.length;
   };
+
+
 
   const getDoctorsData = async () => {
     try {
@@ -49,20 +45,15 @@ const AppContextProvider = (props) => {
   };
 
   const getBedsData = async () => {
-    // console.log("Fetching beds data...");
-    // console.log("Backend URL:", backendUrl);
-
     try {
       const { data } = await axios.get(`${backendUrl}/api/bed/list`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      // console.log("Beds data received:", data);
 
       if (data.success) {
         setBeds(data.beds);
-        // console.log("Beds state updated:", data.beds);
       } else {
         toast.error(data.message);
       }
@@ -75,6 +66,16 @@ const AppContextProvider = (props) => {
         toast.error(error.message);
       }
     }
+  };
+
+  const value = {
+    doctors,
+    beds,
+    token,
+    setToken,
+    currencySymbol,
+    loading,
+    calculateRating,backendUrl
   };
 
   useEffect(() => {
