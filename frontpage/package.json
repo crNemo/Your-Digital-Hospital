@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@google/generative-ai": "^0.21.0",
     "@mui/material": "^6.4.1",
     "@tailwindcss/vite": "^4.0.0",
     "axios": "^1.7.9",
