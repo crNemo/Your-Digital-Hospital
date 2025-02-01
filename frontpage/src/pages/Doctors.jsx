@@ -12,12 +12,10 @@ const Doctors = () => {
 
   const applyFilter = () => {
     if (speciality) {
-      console.log("Applying filter for speciality:", speciality);
       const filtered = doctors.filter(doc => {
         console.log(`Checking doctor: ${doc.name}, Speciality: ${doc.speciality}`);
         return doc.speciality.toLowerCase() === speciality.toLowerCase();
       });
-      console.log("Filtered doctors:", filtered);
       setFilterDoc(filtered);
     } else {
       setFilterDoc(doctors);

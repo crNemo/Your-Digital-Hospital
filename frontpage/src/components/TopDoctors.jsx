@@ -7,10 +7,6 @@ const TopDoctors = () => {
     const navigate = useNavigate();
     const { doctors, calculateRating, loading } = useContext(AppContext);
 
-    console.log("TopDoctors component rendered");
-    console.log("Doctors data:", doctors);
-    console.log("Loading state:", loading);
-
     if (loading) {
         return <div>Loading...</div>;
     }

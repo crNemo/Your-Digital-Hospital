@@ -10,23 +10,27 @@ const AppContextProvider = (props) => {
   const [doctors, setDoctors] = useState([]);
   const [beds, setBeds] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [token,setToken] = useState('')
+  const [token, setToken] = useState('');
 
   const value = {
     doctors,
     beds,
     currencySymbol,
     loading,
-  calculateRating: (doctor) => {
-    if (!doctor.reviews || doctor.reviews.length === 0) return 0;
-    const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
-    return totalRating / doctor.reviews.length;
-  }
+    calculateRating: (doctor) => {
+      if (!doctor.reviews || doctor.reviews.length === 0) return 0;
+      const totalRating = doctor.reviews.reduce((acc, review) => acc + review.rating, 0);
+      return totalRating / doctor.reviews.length;
+    }
   };
 
   const getDoctorsData = async () => {
     try {
-      const { data } = await axios.get(`${backendUrl}/api/doctor/list`);
+      const { data } = await axios.get(`${backendUrl}/api/doctor/list`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       if (data.success) {
         setDoctors(data.doctors);
@@ -44,25 +48,25 @@ const AppContextProvider = (props) => {
     }
   };
 
-  
-  
-
   const getBedsData = async () => {
-    console.log("Fetching beds data...");
-    console.log("Backend URL:", backendUrl);
+    // console.log("Fetching beds data...");
+    // console.log("Backend URL:", backendUrl);
 
     try {
-      const { data } = await axios.get(`${backendUrl}/api/bed/list`);
-      console.log("Beds data received:", data);
+      const { data } = await axios.get(`${backendUrl}/api/bed/list`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      // console.log("Beds data received:", data);
 
       if (data.success) {
         setBeds(data.beds);
-        console.log("Beds state updated:", data.beds);
+        // console.log("Beds state updated:", data.beds);
       } else {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log("Error:", error);
       if (error.response) {
         toast.error(`Request failed with status code ${error.response.status}: ${error.response.data.message}`);
       } else if (error.request) {
@@ -74,9 +78,13 @@ const AppContextProvider = (props) => {
   };
 
   useEffect(() => {
-    getDoctorsData();
-    getBedsData();
-    setLoading(false);
+    const fetchData = async () => {
+      await getDoctorsData();
+      await getBedsData();
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   return (
