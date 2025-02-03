@@ -6,7 +6,9 @@ import BellIcon from './BellIcon';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const { token, setToken } = useContext(AppContext);
+
+    const {token,setToken,userData} = useContext(AppContext);
+
     const [showMenu, setShowMenu] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -116,58 +118,27 @@ const Navbar = () => {
                 
             </ul>
             <div className='flex items-center gap-15'>
-                <BellIcon className="relative inline-flex items-center justify-center" notifications={notifications} unreadCount={unreadCount} markAsRead={markAsRead} markAllAsRead={markAllAsRead} />
-                {token ? (
-                    <div className='flex items-center gap-2 cursor-pointer group relative dropdown'>
-                        <img
-                            className='w-8 rounded-full'
-                            src={assets.profile_pic}
-                            alt=""
-                            onClick={() => setShowDropdown((prev) => !prev)}
-                        />
-                        <img
-                            className='w-2.5'
-                            src={assets.dropdown_icon}
-                            alt=""
-                            onClick={() => setShowDropdown((prev) => !prev)}
-                        />
-                        {console.log(showDropdown)}
-                        {showDropdown && (
-                            <div className='absolute top-0 right-0 pt-14 text-base font-medium text-grey-600 z-20'>
-                                <div className='min-w-48 bg-[#c2c2ed] rounded flex flex-col gap-4 p-4'>
-                                    <p
-                                        onClick={() => navigate('my-profile')}
-                                        className='hover:text-[#435f78] cursor-pointer'
-                                    >
-                                        My Profile
-                                    </p>
-                                    <p
-                                        onClick={() => navigate('my-appointments')}
-                                        className='hover:text-[#435f78] cursor-pointer'
-                                    >
-                                        My Appointments
-                                    </p>
-                                    <p onClick={logout} className='hover:text-[#435f78] cursor-pointer'>
-                                        Logout
-                                    </p>
+            <BellIcon className="relative inline-flex items-center justify-center" notifications={notifications} unreadCount={unreadCount} markAsRead={markAsRead} markAllAsRead={markAllAsRead} />
+                {
+                    token && userData
+                        ? <div className='flex items-center gap-2 cursor-pointer group relative dropdown'>
+
+                            <img className='w-8 rounded-full' src={userData.image} alt="" onClick={() => setShowDropdown(prev => !prev)}/>
+                            <img className='w-2.5' src={assets.dropdown_icon} alt="" onClick={() => setShowDropdown(prev => !prev)} />
+                            {console.log(showDropdown)}
+                            {showDropdown && (
+                                <div className='absolute top-0 right-0 pt-14 text-base font-medium text-grey-600 z-20'>
+                                    <div className='min-w-48 bg-[#c2c2ed] rounded flex flex-col gap-4 p-4'>
+                                        <p onClick={() => navigate('my-profile')} className='hover:text-[#435f78] cursor-pointer'>My Profile</p>
+                                        <p onClick={() => navigate('my-appointments')} className='hover:text-[#435f78] cursor-pointer'>My Appointments</p>
+                                        <p onClick={logout} className='hover:text-[#435f78] cursor-pointer'>Logout</p>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
-                ) : (
-                    <button
-                        onClick={() => navigate('/login')}
-                        className='bg-[#5f6FFF] text-white px-8 py-3 rounded-full font-light hidden md:block'
-                    >
-                        Create Account
-                    </button>
-                )}
-                <img
-                    onClick={() => setShowMenu(true)}
-                    className='w-6 md:hidden'
-                    src={assets.menu_icon}
-                    alt=""
-                />
+                            )}
+                        </div>
+                        : (<button onClick={() => navigate('/login')} className='bg-[#5f6FFF] text-white px-8 py-3 rounded-full font-light hidden md:block'>Create Account</button>)
+                }
+                <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
                 {/* mobile menu */}
                 <div
                     className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'
