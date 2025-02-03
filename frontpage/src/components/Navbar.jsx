@@ -114,10 +114,11 @@ const Navbar = () => {
                     <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
                 </NavLink>
             </ul>
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-15'>
+            <BellIcon className="relative inline-flex items-center justify-center" notifications={notifications} unreadCount={unreadCount} markAsRead={markAsRead} markAllAsRead={markAllAsRead} />
                 {
                     token && userData
-                        ? <div className='flex items-center gap-2 cursor-pointer group relative'>
+                        ? <div className='flex items-center gap-2 cursor-pointer group relative dropdown'>
 
                             <img className='w-8 rounded-full' src={userData.image} alt="" onClick={() => setShowDropdown(prev => !prev)}/>
                             <img className='w-2.5' src={assets.dropdown_icon} alt="" onClick={() => setShowDropdown(prev => !prev)} />
@@ -132,7 +133,7 @@ const Navbar = () => {
                                 </div>
                             )}
                         </div>
-                        : <button onClick={() => navigate('/login')} className='bg-[#5f6FFF] text-white px-8 py-3 rounded-full font-light hidden md:block'>Create Account</button>
+                        : (<button onClick={() => navigate('/login')} className='bg-[#5f6FFF] text-white px-8 py-3 rounded-full font-light hidden md:block'>Create Account</button>)
                 }
                 <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
                 {/* mobile menu */}
