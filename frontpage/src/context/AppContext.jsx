@@ -48,7 +48,7 @@ const AppContextProvider = (props) => {
   const loadUserProfileData = async () => {
     try {
       
-      const {data} = await axios.get(backendUrl + '/api/user/get-profile',{headers:{token}})
+      const {data} = await axios.get(backendUrl + '/api/user/get-profile',{headers:{Authorization: `Bearer ${token}`}})
       if (data.success) {
         setUserData(data.userData)
       } else {
@@ -87,6 +87,7 @@ const AppContextProvider = (props) => {
 
   const value = {
     doctors,
+    getDoctorsData,
     beds,
     token,
     setToken,
