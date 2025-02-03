@@ -43,7 +43,7 @@ const Login = () => {
                     />
                 </div>
 
-                <button className='bg-primary text-white w-full py-2 rounded-mg text-base' onClick={async () => {
+                <button className='bg-primary text-white w-full py-2 rounded-mg text-base cursor-pointer hover:bg-blue-600 active:bg-primary' onClick={async () => {
                     await fetch('http://localhost:4000/api/create', {
                         method: "POST",
                         headers: {
