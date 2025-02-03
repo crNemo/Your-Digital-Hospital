@@ -26,9 +26,11 @@ const Ambulance = () => {
     <div className="min-h-screen bg-gray-100 p-5">
       {/* Emergency Call Button */}
       <div className="flex justify-center mb-4">
-        <button className="bg-red-500 text-white font-bold py-3 px-6 rounded-full text-lg">
-          Call Nearest Ambulance [Emergency]
-        </button>
+        <a href='http://localhost:3000/' target='_blank' rel='noopener noreferrer'>
+          <button className="bg-red-500 text-white font-bold py-3 px-6 rounded-full text-lg cursor-pointer">
+            Call Nearest Ambulance [Emergency]
+          </button>
+        </a>
       </div>
 
       {/* Container */}
@@ -40,9 +42,8 @@ const Ambulance = () => {
           {["All", "BLS", "ALS", "Neonatal", "Air", "Mortuary"].map(type => (
             <button
               key={type}
-              className={`px-4 py-2 rounded-full transition ${
-                filter === type ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
-              }`}
+              className={`px-4 py-2 rounded-full transition ${filter === type ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
+                }`}
               onClick={() => setFilter(type)}
             >
               {type}
@@ -60,9 +61,9 @@ const Ambulance = () => {
                 <p><strong>Price:</strong> {ambulance.price}</p>
                 <p><strong>Contact:</strong> {ambulance.contact}</p>
               </div>
-              <a 
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ambulance.name)}`} 
-                target="_blank" 
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ambulance.name)}`}
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
               >

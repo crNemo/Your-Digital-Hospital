@@ -64,7 +64,7 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
                 onClick={() => markAsRead(notification._id)}
               >
                 <p className="text-gray-900 font-medium">{notification.title}</p>
-                <p className="text-gray-600 text-sm">{notification.body}</p>
+                <p className="text-gray-600 text-sm break-words whitespace-normal">{notification.body}</p>
               </div>
             ))
           )}

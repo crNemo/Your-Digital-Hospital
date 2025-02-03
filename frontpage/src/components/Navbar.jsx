@@ -108,9 +108,12 @@ const Navbar = () => {
                     <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
                 </NavLink>
                 <NavLink to='/ambulance'>
+                    <a href='http://localhost:3000/' target='_blank' rel='noopener noreferrer'>
                     <li className='py-1'>CALL AMBULANCE</li>
                     <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
+                    </a>
                 </NavLink>
+                
             </ul>
             <div className='flex items-center gap-15'>
                 <BellIcon className="relative inline-flex items-center justify-center" notifications={notifications} unreadCount={unreadCount} markAsRead={markAsRead} markAllAsRead={markAllAsRead} />
@@ -186,6 +189,7 @@ const Navbar = () => {
                         <NavLink onClick={() => setShowMenu(false)} to='/doctors'>
                             <p className='px-4 py-2 rounded inline-block'>All Doctors</p>
                         </NavLink>
+                        
                         <NavLink onClick={() => setShowMenu(false)} to='/ambulance'>
                             <p className='px-4 py-2 rounded inline-block text-red-400'>Call Ambulance</p>
                         </NavLink>
