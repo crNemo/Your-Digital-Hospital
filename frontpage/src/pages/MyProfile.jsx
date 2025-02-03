@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
-import { assets } from '../assets/assets'
+
+import { useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const MyProfile = () => {
 
-  const [userData, setUserData] = useState({
-    name: "Ram Kumar Sharma",
-    image: assets.profile_pic,
-    email: 'ram.kumar09@gmail.com',
-    phone: '9841234567',
-    address: {
-      lin1: "Maitighar",
-      lin2: "Kathmandu,Nepal"
-    },
-    gender: 'Male',
-    dob: '1998/09/09',
-  })
+  const {userData,setUserData} = useContext(AppContext)
 
   const [isEdit, setIsEdit] = useState(false)
 
@@ -45,14 +36,14 @@ const MyProfile = () => {
           {
             isEdit
               ? <p>
-                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, lin1: e.target.value } }))} value={userData.address.lin1} type="text" />
+                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line1: e.target.value } }))} value={userData.address.line1} type="text" />
                 <br />
-                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, lin2: e.target.value } }))} value={userData.address.lin2} type="text" />
+                <input className='bg-gray-50' onChange={(e) => setUserData(prev => ({ ...prev, address: { ...prev.address, line2: e.target.value } }))} value={userData.address.line2} type="text" />
               </p>
               : <p className='text-gray-500'>
-                {userData.address.lin1}
+                {userData.address.line1}
                 <br />
-                {userData.address.lin2}
+                {userData.address.line2}
               </p>
           }
         </div>
