@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from 'react-toastify';
 
@@ -107,10 +107,11 @@ const AppContextProvider = (props) => {
 
     useEffect(() =>{
       if (token) {
-        loadUserProfileData
+        loadUserProfileData()
       } else{
         setUserData(false)
       }
+      
     },[token])
 
 
