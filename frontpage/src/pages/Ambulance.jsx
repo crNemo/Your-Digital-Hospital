@@ -61,7 +61,7 @@ const Ambulance = () => {
                 <p><strong>Contact:</strong> {ambulance.contact}</p>
               </div>
               <a 
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ambulance.location)}`} 
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ambulance.name)}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"

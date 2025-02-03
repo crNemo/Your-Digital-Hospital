@@ -136,7 +136,7 @@ const AddDoctors = () => {
               <p>Speciality</p>
               <select onChange={(e)=> setSpeciality(e.target.value)} value={speciality} className='border rounded px-3 py-2' name='' id=''>
                 <option value="General Physician">General Physician</option>
-                <option value="Gynecologosit">Gynecologoist</option>
+                <option value="Gynecologist">Gynecologist</option>
                 <option value="Dermatologist">Dermatologist</option>
                 <option value="Pediatricians">Pediatricians</option>
                 <option value="Neurologist">Neurologist</option>

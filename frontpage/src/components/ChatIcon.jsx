@@ -23,7 +23,7 @@ const ChatIcon = ({ onClick }) => {
         z-50
       "
     >
-      Hamro Jasoos
+      हाम्रो जासूस
     </button>
   );
 };

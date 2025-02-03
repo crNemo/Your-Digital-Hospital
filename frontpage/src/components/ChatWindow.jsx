@@ -16,9 +16,9 @@ const ChatWindow = ({ onClose }) => {
         body: JSON.stringify({ message: message })
       }).then(response => response.json())
         .then(data => {
-          setMessages([...messages, {text: message, sender: 'You'}, {text: data.response, sender: 'YDH'}])
+          setMessages([...messages, {text: message, sender: 'You'}, {text: data.response, sender: 'जासूस'}])
       }).catch(error => {
-         setMessages([...messages, {text: message, sender: 'You'}, {text: "Error processing your request.", sender: 'YDH'}])
+         setMessages([...messages, {text: message, sender: 'You'}, {text: "Error processing your request.", sender: 'जासूस'}])
       });
     }
 
