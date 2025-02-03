@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
+import { assets } from '../assets/assets';
 
 const ChatWindow = ({ onClose }) => {
     const [messages, setMessages] = useState([]);
@@ -23,12 +24,15 @@ const ChatWindow = ({ onClose }) => {
     }
 
   return (
-    <div style={{position: 'fixed', bottom: 80, right: 20, backgroundColor: 'white', border: '1px solid #ccc', padding: 10, width: 300, height: '400px'}}>
+    <div className="border rounded-2xl shadow-lg" style={{position: 'fixed', bottom: 80, right: 20, backgroundColor: 'white', border: '1px solid #ccc', padding: 10, width: 300, height: '400px'}}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div></div>
+        <button className="cursor-pointer" onClick={onClose} style={{marginTop: 10}}><img src={assets.close} alt="Close" style={{marginTop:1,width: 25, height: 25 }} /></button>
+      </div>
       <div style={{ height: 300, overflowY: 'scroll', borderBottom: '1px solid #ddd', padding: 5 }}>
         {messages.map((msg, index) => <ChatMessage key={index} sender={msg.sender} text={msg.text}/>)}
       </div>
       <ChatInput onMessageSubmit={handleMessageSubmit} />
-      <button onClick={onClose} style={{marginTop: 10}}>Close</button>
     </div>
   );
 };
