@@ -44,6 +44,8 @@ import bed5 from './bed5.png'
 import bed6 from './bed6.png'
 import star from './star.svg'
 import star_blank from './star_blank.svg'
+import send from './send.png'
+import close from './close.png'
 
 export const assets = {
     appointment_img,
@@ -64,7 +66,9 @@ export const assets = {
     stripe_logo,
     razorpay_logo,
     star,
-    star_blank
+    star_blank,
+    send,
+    close
 }
 
 export const specialityData = [

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import {assets} from '../assets/assets'
 import { AdminContext } from '../context/AdminContext'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
 
