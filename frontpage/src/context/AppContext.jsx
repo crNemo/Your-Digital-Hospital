@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast'; 
 
 export const AppContext = createContext();
 
@@ -120,6 +120,7 @@ const AppContextProvider = (props) => {
   return (
     <AppContext.Provider value={value}>
       {props.children}
+      <Toaster />
     </AppContext.Provider>
   );
 };

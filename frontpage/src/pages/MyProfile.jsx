@@ -3,7 +3,7 @@ import {assets} from '../assets/assets'
 import { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 
 const MyProfile = () => {
 

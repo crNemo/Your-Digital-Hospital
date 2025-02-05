@@ -2,7 +2,7 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import { useState } from 'react'
 import { AdminContext } from '../../context/AdminContext'
-import {toast} from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import { useContext } from 'react'
 import axios from 'axios'
 

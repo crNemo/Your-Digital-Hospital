@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
 import { use } from 'react'
 import RelatedDoctors from '../components/RelatedDoctors'
-import { toast } from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios'
 
 const Appointment = () => {

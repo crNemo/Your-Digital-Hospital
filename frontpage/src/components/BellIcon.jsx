@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaBell } from 'react-icons/fa'; // Ensure react-icons is installed
+import { Bell } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [shownNotifications, setShownNotifications] = useState(() => {
+    const saved = localStorage.getItem('shownNotifications');
+    return saved ? JSON.parse(saved) : [];
+  });
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
@@ -30,15 +34,41 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
     };
   }, [showDropdown]);
 
+  useEffect(() => {
+    // Request notification permission when the component mounts
+    if (Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  useEffect(() => {
+    // Show desktop notifications for new notifications
+    if (notifications.length > 0) {
+      const latestNotification = notifications[0];
+      if (
+        Notification.permission === 'granted' &&
+        !latestNotification.read &&
+        !shownNotifications.includes(latestNotification._id)
+      ) {
+        new Notification(latestNotification.title, {
+          body: latestNotification.body,
+        });
+        const updatedShownNotifications = [...shownNotifications, latestNotification._id];
+        setShownNotifications(updatedShownNotifications);
+        localStorage.setItem('shownNotifications', JSON.stringify(updatedShownNotifications));
+      }
+    }
+  }, [notifications, shownNotifications]);
+
   const sortedNotifications = notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
   const displayedNotifications = showAll ? sortedNotifications.slice(0, 8) : sortedNotifications.slice(0, 5);
 
   return (
     <div className="relative inline-block" ref={dropdownRef}>
       <div className="relative cursor-pointer" onClick={handleIconClick}>
-        <FaBell className="text-3xl" />
+        <Bell size={27} className='pl-1'/>
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
             {unreadCount}
           </span>
         )}

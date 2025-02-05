@@ -1,6 +1,6 @@
 import React from 'react'
 import Login from './pages/Login'
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 import { useContext } from 'react';
 import { AdminContext } from './context/AdminContext';
 import Navbar from './components/Navbar';
@@ -17,7 +17,7 @@ const App = () => {
 
   return aToken ? (
     <div className='bg-[#F8F9FD]'>
-      <ToastContainer />
+      <Toaster />
       <Navbar />
       <div className='flex items-start'>
         <Sidebar />
@@ -34,7 +34,7 @@ const App = () => {
   ) : (
     <>
       <Login />
-      <ToastContainer />
+      <Toaster />
     </>
   )
 }

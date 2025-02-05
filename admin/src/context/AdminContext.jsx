@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 import axios from 'axios'
-import { toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const AdminContext = createContext()
 
