@@ -36,6 +36,7 @@ app.use(cors());
 // api endpoints
 app.use('/api/admin', adminRouter);
 app.use('/api/doctor', doctorRouter);
+app.use('/api/beds', bedRouter);
 app.use('/api/user', userRouter);
 
 // Notification endpoints
