@@ -8,6 +8,7 @@ import adminRouter from './routes/adminRoute.js';
 import notificationDB from './models/notificationModel.js';
 import doctorRouter from './routes/doctorRoute.js';
 import userRouter from './routes/userRoute.js';
+import bedRouter from './routes/bedRoute.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -94,3 +95,4 @@ app.post('/test', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
