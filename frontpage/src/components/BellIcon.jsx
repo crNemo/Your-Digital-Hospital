@@ -13,7 +13,7 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
   const navigate = useNavigate();
 
   const handleIconClick = () => {
-    setShowDropdown(!showDropdown);
+    setShowDropdown((prev) => !prev);
   };
 
   const handleClickOutside = (event) => {
@@ -35,14 +35,12 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
   }, [showDropdown]);
 
   useEffect(() => {
-    // Request notification permission when the component mounts
     if (Notification.permission !== 'granted') {
       Notification.requestPermission();
     }
   }, []);
 
   useEffect(() => {
-    // Show desktop notifications for new notifications
     if (notifications.length > 0) {
       const latestNotification = notifications[0];
       if (
@@ -66,19 +64,26 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
   return (
     <div className="relative inline-block" ref={dropdownRef}>
       <div className="relative cursor-pointer" onClick={handleIconClick}>
-        <Bell size={27} className='pl-1'/>
+        <Bell size={27} className='pl-1 transition-transform transform hover:scale-110' />
         {unreadCount > 0 && (
-          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full animate-pulse">
             {unreadCount}
           </span>
         )}
       </div>
       {showDropdown && (
-        <div className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+        <div
+          className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-10"
+          style={{
+            opacity: showDropdown ? 1 : 0,
+            transform: showDropdown ? 'scale(1)' : 'scale(0.95)',
+            transition: 'opacity 0.3s ease-out, transform 0.3s ease-out',
+          }}
+        >
           <div className="flex justify-between items-center p-4 border-b border-gray-200">
-            <p className="text-gray-900 font-medium">Notifications</p>
+            <p className="text-gray-900 font-semibold">Notifications</p>
             <button
-              className="text-blue-500 text-sm cursor-pointer"
+              className="text-blue-500 text-sm cursor-pointer hover:underline"
               onClick={markAllAsRead}
             >
               Mark all as read
@@ -90,17 +95,20 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
             displayedNotifications.map((notification) => (
               <div
                 key={notification._id}
-                className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 ${notification.read ? 'bg-gray-100' : ''}`}
+                className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition-all ease-in-out duration-200 transform hover:scale-105 ${
+                  notification.read ? 'bg-gray-100' : ''
+                }`}
                 onClick={() => markAsRead(notification._id)}
               >
                 <p className="text-gray-900 font-medium">{notification.title}</p>
                 <p className="text-gray-600 text-sm break-words whitespace-normal">{notification.body}</p>
+                <p className="text-xs text-gray-500">{new Date(notification.date).toLocaleString()}</p>
               </div>
             ))
           )}
           {notifications.length > 5 && !showAll && (
             <button
-              className="w-full text-blue-500 text-sm p-4 border-t border-gray-200 cursor-pointer hover:bg-gray-100"
+              className="w-full text-blue-500 text-sm p-4 border-t border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
               onClick={() => setShowAll(true)}
             >
               Show all
@@ -108,7 +116,7 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
           )}
           {notifications.length > 8 && showAll && (
             <button
-              className="w-full text-blue-500 text-sm p-4 border-t border-gray-200 cursor-pointer hover:bg-gray-100"
+              className="w-full text-blue-500 text-sm p-4 border-t border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
               onClick={() => navigate('/all-notifications')}
             >
               View all notifications

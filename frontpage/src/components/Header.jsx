@@ -29,15 +29,15 @@ const Header = () => {
       {/* Left side */}
       <div className='md:w-1/2 flex flex-col justify-center gap-2 py-6 md:py-10 lg:py-16 text-left'>
         <p className='text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight'>
-          Book Appointments <br className='hidden md:block' /> with Trusted Doctors!
+          Keep Your Health <br className='hidden md:block' /> In Check Today
         </p>
         <div className='flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light'>
           <img className='w-28' src={assets.group_profiles} alt='Group Profiles' />
-          <p>Schedule your appointments and keep your health in check!</p>
+          <p>YDH is the solution to all your health problems!</p>
         </div>
         <NavLink to='/create' onClick={() => window.scrollTo(0, 0)}>
-          <button className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-[#f71928] text-lg font-semibold hover:scale-105 transition-all duration-300'>
-            Ask For HELP <img className='w-3' src={assets.arrow_icon} alt='Arrow Icon' />
+          <button className='flex items-center gap-2 bg-[#f71928] px-8 py-3 rounded-full text-white text-lg font-semibold hover:scale-105 transition-all duration-300'>
+            ASK FOR HELP! 
           </button>
         </NavLink>
       </div>

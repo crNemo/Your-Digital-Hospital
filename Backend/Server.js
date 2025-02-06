@@ -69,7 +69,7 @@ app.post('/api/recognize', async (req, res) => {
     const user_input = req.body.message;
 
     try {
-        const prompt = `Given the following symptoms: "${user_input}", what could be the possible disease? provide a response that is short but informative.`;
+        const prompt = `Given the following symptoms: "${user_input}", what could be the possible disease? provide a response that is short but informative & also provide percentange probability of the disease and speciality of doctor to consult.`;
          console.log("Prompt sent to Gemini API", prompt);
         const result = await model.generateContent(prompt);
         console.log("API response", result);

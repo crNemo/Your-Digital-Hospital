@@ -7,7 +7,7 @@ import BellIcon from './BellIcon';
 const Navbar = () => {
     const navigate = useNavigate();
 
-    const {token,setToken,userData} = useContext(AppContext);
+    const {token, setToken, userData} = useContext(AppContext);
 
     const [showMenu, setShowMenu] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -18,7 +18,6 @@ const Navbar = () => {
         setToken(false);
         localStorage.removeItem('token');
     };
-
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -115,20 +114,17 @@ const Navbar = () => {
                     <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
                     </a>
                 </NavLink>
-                
             </ul>
             <div className='flex items-center gap-15'>
-            <BellIcon className="relative inline-flex items-center justify-center" notifications={notifications} unreadCount={unreadCount} markAsRead={markAsRead} markAllAsRead={markAllAsRead} />
+                <BellIcon className="relative inline-flex items-center justify-center" notifications={notifications} unreadCount={unreadCount} markAsRead={markAsRead} markAllAsRead={markAllAsRead} />
                 {
                     token && userData
                         ? <div className='flex items-center gap-2 cursor-pointer group relative dropdown'>
-
-                            <img className='w-8 rounded-full' src={userData.image} alt="" onClick={() => setShowDropdown(prev => !prev)}/>
+                            <img className='w-8 rounded-full' src={userData.image} alt="" onClick={() => setShowDropdown(prev => !prev)} />
                             <img className='w-2.5' src={assets.dropdown_icon} alt="" onClick={() => setShowDropdown(prev => !prev)} />
-                            {console.log(showDropdown)}
                             {showDropdown && (
                                 <div className='absolute top-0 right-0 pt-14 text-base font-medium text-grey-600 z-20'>
-                                    <div className='min-w-48 bg-[#c2c2ed] rounded flex flex-col gap-4 p-4'>
+                                    <div className='min-w-48 bg-[#c2c2ed] rounded flex flex-col gap-4 p-4 shadow-lg transition-all duration-300 transform scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100'>
                                         <p onClick={() => navigate('my-profile')} className='hover:text-[#435f78] cursor-pointer'>My Profile</p>
                                         <p onClick={() => navigate('my-appointments')} className='hover:text-[#435f78] cursor-pointer'>My Appointments</p>
                                         <p onClick={logout} className='hover:text-[#435f78] cursor-pointer'>Logout</p>
@@ -160,7 +156,6 @@ const Navbar = () => {
                         <NavLink onClick={() => setShowMenu(false)} to='/doctors'>
                             <p className='px-4 py-2 rounded inline-block'>All Doctors</p>
                         </NavLink>
-                        
                         <NavLink onClick={() => setShowMenu(false)} to='/ambulance'>
                             <p className='px-4 py-2 rounded inline-block text-red-400'>Call Ambulance</p>
                         </NavLink>
