@@ -4,14 +4,14 @@ import { useEffect } from 'react'
 
 const DoctorsList = () => {
 
-  const{doctors, aToken, getAllDoctors, changeAvailability} = useContext(AdminContext)
+  const{doctors, aToken, getAllDoctors, changeDoctorAvailability} = useContext(AdminContext)
 
   useEffect(() => {
     if (aToken) {
       getAllDoctors()
     }
-  },[aToken])
-
+  },[aToken, getAllDoctors])
+  
   return (
     <div className='m-5 max-h-[90vh] overflow-y-scroll'>
       <h1 className='text-lg font-medium'>All Doctors</h1>
@@ -24,7 +24,7 @@ const DoctorsList = () => {
                 <p className='text-neutral-800 text-lg font-medium'>{item.name}</p>
                 <p className='text-zinc-600 text-sm'>{item.speciality}</p>
                 <div className='mt-2 flex items-center gap-1 text-sm'>
-                  <input onChange={() => changeAvailability(item._id)} type="checkbox" checked={item.available} />
+                  <input onChange={() => changeDoctorAvailability(item._id)} type="checkbox" checked={item.available} />
                   <p>Available</p>
                 </div>
               </div>
