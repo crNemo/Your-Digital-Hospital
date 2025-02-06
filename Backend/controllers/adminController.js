@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import doctorModel from "../models/doctorModel.js"
 import appointmentModel from "../models/appointmentModel.js"
 import userModel from "../models/userModel.js"
+import bedModel from '../models/bedModel.js';
 
 // API for adding doctor 
 const addDoctor = async (req,res) => {
@@ -160,4 +161,15 @@ const adminDashboard = async (req,res) => {
     }
 }
 
-export {addDoctor,loginAdmin,allDoctors, appointmentsAdmin, appointmentCancel, adminDashboard}
+// API to list all beds
+const listBeds = async (req, res) => {
+    try {
+        const beds = await bedModel.find({});
+        res.json({ success: true, beds });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+}
+
+export {addDoctor,loginAdmin,allDoctors, appointmentsAdmin, appointmentCancel, adminDashboard, listBeds}

@@ -7,14 +7,15 @@ const Bed = () => {
     const { speciality } = useParams();
     const [filterBed, setFilterBed] = useState([]);
     const [showFilter, setShowFilter] = useState(false);
+    const [selectedSpeciality, setSelectedSpeciality] = useState('All');
     const { loading, beds, calculateRating } = useContext(AppContext);
     const navigate = useNavigate();
 
     const applyFilter = () => {
-        if (speciality) {
+        if (selectedSpeciality && selectedSpeciality !== 'All') {
             const filtered = beds.filter(bed => {
                 console.log(`Checking bed: ${bed.name}, Speciality: ${bed.speciality}`);
-                return bed.speciality.toLowerCase() === speciality.toLowerCase();
+                return bed.speciality.toLowerCase() === selectedSpeciality.toLowerCase();
             });
             setFilterBed(filtered);
         } else {
@@ -24,7 +25,11 @@ const Bed = () => {
 
     useEffect(() => {
         applyFilter();
-    }, [beds, speciality]);
+    }, [selectedSpeciality, beds]);
+
+    const handleFilterClick = (speciality) => {
+        setSelectedSpeciality(speciality);
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -42,26 +47,32 @@ const Bed = () => {
                 </button>
                 <div className={`flex-col gap-4 text-sm text-grey-600 ${showFilter ? 'flex' : 'hidden sm:flex'}`}>
                     <p
-                        onClick={() => speciality === 'General' ? navigate('/bed') : navigate('/bed/General')}
-                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "General" ? "bg-indigo-100 text-black" : ""}`}
+                        onClick={() => handleFilterClick('All')}
+                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${selectedSpeciality === "All" ? "bg-indigo-100 text-black" : ""}`}
+                    >
+                        All
+                    </p>
+                    <p
+                        onClick={() => handleFilterClick('General')}
+                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${selectedSpeciality === "General" ? "bg-indigo-100 text-black" : ""}`}
                     >
                         General
                     </p>
                     <p
-                        onClick={() => speciality === 'ICU' ? navigate('/bed') : navigate('/bed/ICU')}
-                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "ICU" ? "bg-indigo-100 text-black" : ""}`}
+                        onClick={() => handleFilterClick('ICU')}
+                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${selectedSpeciality === "ICU" ? "bg-indigo-100 text-black" : ""}`}
                     >
                         ICU
                     </p>
                     <p
-                        onClick={() => speciality === 'Surgical' ? navigate('/bed') : navigate('/bed/Surgical')}
-                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Surgical" ? "bg-indigo-100 text-black" : ""}`}
+                        onClick={() => handleFilterClick('Surgical')}
+                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${selectedSpeciality === "Surgical" ? "bg-indigo-100 text-black" : ""}`}
                     >
                         Surgical
                     </p>
                     <p
-                        onClick={() => speciality === 'Pediatric' ? navigate('/bed') : navigate('/bed/Pediatric')}
-                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${speciality === "Pediatric" ? "bg-indigo-100 text-black" : ""}`}
+                        onClick={() => handleFilterClick('Pediatric')}
+                        className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${selectedSpeciality === "Pediatric" ? "bg-indigo-100 text-black" : ""}`}
                     >
                         Pediatric
                     </p>
