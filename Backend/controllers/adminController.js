@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import {v2 as cloudinary} from 'cloudinary'
 import Doctor from "../models/doctorModel.js"
 import jwt from 'jsonwebtoken'
+import doctorModel from "../models/doctorModel.js"
 
 // API for adding doctor 
 const addDoctor = async (req,res) => {
@@ -77,4 +78,13 @@ const loginAdmin = async (req,res) => {
     }
 }
 
-export {addDoctor,loginAdmin}
+const allDoctors = async (req,res) => {
+    try {
+        const doctors = await doctorModel.find({}).select('-password')
+        res.json({success:true,doctors})
+    } catch (error) {
+        console.log(error)  
+        res.json({success: false, message: `${error.message}`})
+    }
+}
+export {addDoctor,loginAdmin,allDoctors}

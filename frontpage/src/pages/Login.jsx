@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../context/AppContext';
+import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+
+    const { backendUrl,token,setToken} = useContext(AppContext)
+    const navigate = useNavigate()
+    
     const [state, setState] = useState('Sign Up');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -9,7 +16,39 @@ const Login = () => {
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         // Add your form submission logic here
+
+        try {
+            
+            if (state == 'Sign Up') {
+                
+                const {data} = await axios.post(backendUrl + '/api/user/register',{name,password,email})
+                if (data.success) {
+                    localStorage.setItem('token',data.token)
+                    setToken(data.token)
+                }else{
+                    toast.error(data.message)
+                }
+
+            } else{
+                const {data} = await axios.post(backendUrl + '/api/user/login',{password,email})
+                if (data.success) {
+                    localStorage.setItem('token',data.token)
+                    setToken(data.token)
+                }else{
+                    toast.error(data.message)
+                }
+            }
+
+        } catch (error) {
+            toast.error(error.message)
+        }
     };
+
+    useEffect(() => {
+        if (token) {
+            navigate('/')
+        }
+    },[token])
 
     return (
         <form onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
@@ -48,7 +87,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button className='bg-primary text-white w-full py-2 rounded-mg text-base'>
+                <button type='submit' className='bg-primary text-white w-full py-2 rounded-mg text-base'>
                     {state === 'Sign Up' ? "Create Account" : "Login"}
                 </button>
                 {state === 'Sign Up' ? (

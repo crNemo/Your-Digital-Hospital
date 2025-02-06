@@ -1,42 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { assets } from '../assets/assets';
-import { NavLink, useNavigate } from 'react-router-dom';// Ensure this import is correct
+import { NavLink } from 'react-router-dom';
 
-const notifications = [
-  { text: "Urgent: Bishesh is in urgent need of AB+ blood type at KMC Hospital,Sinamangal Kathmandu", color: "bg-red-500" },
-  { text: "Polio Vaccination Camp on 15th Febuarary in Kathmandu Metropolitian City Ward-31", color: "bg-blue-500" },
-  { text: "Free Health-Checkup at Maitighar for people over 80 years", color: "bg-green-500" },
+const presetNotifications = [
+  "Urgent: Bishesh is in urgent need of AB+ blood type at KMC Hospital, Sinamangal, Kathmandu",
+  "Polio Vaccination Camp on 15th February in Kathmandu Metropolitan City Ward-31",
+  "Free Health-Checkup at Maitighar for people over 80 years",
+  "COVID-19 Booster Dose available at all major health centers in Kathmandu",
+  "Emergency Alert: Road accident reported at Kalanki. Drive safely!",
+  "Dengue Awareness Program at Lalitpur Community Hall on March 5th"
 ];
 
 const Header = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (presetNotifications.length > 1) {
+      const interval = setInterval(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % presetNotifications.length);
+      }, 3000);
+
+      return () => clearInterval(interval);
+    }
+  }, []);
 
   return (
-    <div className='flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20 md:w-[60vw] md:h-[85vh]'>
+    <div className='flex flex-col md:flex-row bg-primary rounded-lg px-6 md:px-10 lg:px-20 md:w-[80vw] md:h-[75vh] relative'>
       {/* Left side */}
-      <div className='md:w-1/2 flex flex-col justify-center gap-4 py- m-auto md:py-[10vw] md:mb-[-30px]'>
-        <p className='text-3xl md:text-4xl lg:text-5xl text-white font-semibond leding-tight md:leading-tight lg:leading-tight'>
-          Book Appointments <br className='hidden:block' /> with Trusted Doctors!
+      <div className='md:w-1/2 flex flex-col justify-center gap-2 py-6 md:py-10 lg:py-16 text-left'>
+        <p className='text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight'>
+          Book Appointments <br className='hidden md:block' /> with Trusted Doctors!
         </p>
         <div className='flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light'>
-          <img className='w-28' src={assets.group_profiles} alt="Group Profiles" />
+          <img className='w-28' src={assets.group_profiles} alt='Group Profiles' />
           <p>Schedule your appointments and keep your health in check!</p>
         </div>
-        <NavLink to='/create' onClick={()=>scrollTo(0,0)}>
-          <a className='flex items-center gap-2 bg-white px-8 py-5 rounded-full text-[#f71928] text-lg font-semibd p-4 m-auto md:m-0 hover:scale-105 transition-all duration-300 '>
-            Ask For HELP <img className='w-3' src={assets.arrow_icon} alt="Arrow Icon" /></a>
+        <NavLink to='/create' onClick={() => window.scrollTo(0, 0)}>
+          <button className='flex items-center gap-2 bg-white px-8 py-3 rounded-full text-[#f71928] text-lg font-semibold hover:scale-105 transition-all duration-300'>
+            Ask For HELP <img className='w-3' src={assets.arrow_icon} alt='Arrow Icon' />
+          </button>
         </NavLink>
       </div>
-      {/* Right side */}
-      {/* <div className='md:w-1/2 flex flex-col justify-center gap-4 py-10 m-auto md:py-[10vw] md:mb-[-30px]'>
-        <div className="flex flex-col items-center justify-center p-6 text-white">
-          <h2 className="text-2xl font-bold mb-4">Important Notifications</h2>
-          <div className="relative w-full h-40 flex items-center justify-center">
-            <div className={`w-full h-32 flex items-center justify-center text-white text-lg font-semibd p-4 rounded-xl shadow-lg transition-all duration-500 ${notifications[index].color}`}>
-              {notifications[index].text}
-            </div>
+      {/* Right side - Notifications Carousel */}
+      <div className='md:w-1/2 flex justify-center items-center'>
+        <div className='bg-gray-200 rounded-lg p-6 shadow-lg w-96 h-60 flex flex-col items-center relative overflow-hidden'>
+          <h2 className='text-lg font-bold text-gray-900 text-center mb-4'>Important Information</h2>
+          <div className='relative w-full h-40 flex flex-col items-center overflow-hidden'>
+            {presetNotifications.map((notification, i) => (
+              <div 
+                key={i} 
+                className={`absolute w-full text-center text-black text-lg font-semibold p-4 bg-white shadow-md rounded-lg flex items-center justify-center transition-transform duration-500`} 
+                style={{ 
+                  transform: `translateY(${(i - index) * 120}%)`,
+                  opacity: i === index ? 1 : 0,
+                  transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
+                }}
+              >
+                {notification}
+              </div>
+            ))}
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

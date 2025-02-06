@@ -2,7 +2,7 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import { useState } from 'react'
 import { AdminContext } from '../../context/AdminContext'
-import {toast} from 'react-toastify'
+import toast, { Toaster } from 'react-hot-toast';
 import { useContext } from 'react'
 import axios from 'axios'
 
@@ -52,14 +52,27 @@ const AddDoctors = () => {
       const {data} = await axios.post(backendUrl+'/api/admin/add-doctor',formData,{headers:{ aToken }})
       if (data.success) {
         toast.success(data.message)
-        
+        setDocImg(false)
+        setName('')
+        setEmail('')
+        setPassword('')
+        setSpeciality('General physician')
+        setExperience('1 Year')
+        setFees('')
+        setAbout('')
+        setDegree('')
+        setAddress1('')
+        setAddress2('')
+
       }else{
         toast.error(data.message)
+
       }
 
 
     } catch (error) {
-      
+      toast.error('error.message')
+      console.log(error)
     }
 
   }
@@ -123,7 +136,7 @@ const AddDoctors = () => {
               <p>Speciality</p>
               <select onChange={(e)=> setSpeciality(e.target.value)} value={speciality} className='border rounded px-3 py-2' name='' id=''>
                 <option value="General Physician">General Physician</option>
-                <option value="Gynecologosit">Gynecologoist</option>
+                <option value="Gynecologist">Gynecologist</option>
                 <option value="Dermatologist">Dermatologist</option>
                 <option value="Pediatricians">Pediatricians</option>
                 <option value="Neurologist">Neurologist</option>
