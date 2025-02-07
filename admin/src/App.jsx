@@ -22,6 +22,7 @@ const App = () => {
     const {dToken} = useContext(DoctorContext)
 
     return aToken || dToken ? (
+        
         <div className='bg-[#F8F9FD]'>
             <Toaster />
             <Navbar />
@@ -51,6 +52,7 @@ const App = () => {
             <Toaster />
         </>
     )
+
 }
 
 export default App
