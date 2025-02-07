@@ -86,13 +86,24 @@ const DoctorContextProvider = (props) => {
             toast.error(error.message);
         }
     };
-
+    const getStreamVideoDoctorToken = async (doctorId) => {
+        try {
+          const response = await axios.get(`${backendUrl}/api/stream-video/doctor-token?doctorId=${doctorId}`);
+          return response.data.token;
+        } catch (error) {
+          console.error('Error fetching Stream Video token:', error);
+          toast.error('Failed to fetch Stream Video token');
+          return null;
+        }
+      };
     const value = {
         dToken, setDToken,
         backendUrl,
         appointments, setAppointments,
         getAppointments,
         completeAppointment, cancelAppointment,
+        getStreamVideoDoctorToken,
+
         dashData,setDashData,getDashData,
     };
 
