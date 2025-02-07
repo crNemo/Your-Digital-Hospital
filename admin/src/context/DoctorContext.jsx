@@ -8,6 +8,8 @@ const DoctorContextProvider = (props) => {
     const [dToken, setDToken] = useState(localStorage.getItem('dToken') || null);
     const [appointments, setAppointments] = useState([]);
 
+    const[dashData, setDashData] = useState(false);
+
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const DoctorContextProvider = (props) => {
                 toast.error(data.message);
             }
         } catch (error) {
-            console.log(error);
+            console.error('Error fetching appointments:', error);
             toast.error(error.message);
         }
     };
@@ -46,7 +48,7 @@ const DoctorContextProvider = (props) => {
                 toast.error(data.message);
             }
         } catch (error) {
-            console.log(error);
+            console.error('Error completing appointment:', error);
             toast.error(error.message);
         }
     };
@@ -63,7 +65,24 @@ const DoctorContextProvider = (props) => {
                 toast.error(data.message);
             }
         } catch (error) {
-            console.log(error);
+            console.error('Error canceling appointment:', error);
+            toast.error(error.message);
+        }
+    };
+
+    const getDashData = async () => {
+        try {
+            const { data } = await axios.get(`${backendUrl}/api/doctor/dashboard`, {
+                headers: { Authorization: `Bearer ${dToken}` }
+            });
+            if (data.success) {
+                setDashData(data.dashData);
+                console.log(data.dashData);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
             toast.error(error.message);
         }
     };
@@ -74,6 +93,7 @@ const DoctorContextProvider = (props) => {
         appointments, setAppointments,
         getAppointments,
         completeAppointment, cancelAppointment,
+        dashData,setDashData,getDashData,
     };
 
     return (
