@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
+
+
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .rotating-logo {
+    animation: rotate 10s linear infinite;
+  }
+
+
 @keyframes slide-in {
     from {
         transform: translateX(100%);
@@ -12,7 +28,7 @@
 }
 
 .animate-slide-in {
-    animation: slide-in 0.3s ease-out;
+  animation: slide-in 0.50s ease-out;
 }
 
 

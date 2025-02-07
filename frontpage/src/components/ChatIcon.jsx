@@ -36,7 +36,7 @@ const ChatIcon = ({ onClick }) => {
 
         {/* Robotic Icon - Moves slightly left on hover */}
         <svg
-          className={`
+          className={` rotating-logo 
             w-6 h-6 transition-all duration-500 ease-in-out transform
             ${isHovered ? "translate-x-[-8px]" : "translate-x-0"}
           `}
