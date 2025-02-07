@@ -18,6 +18,7 @@ import ChatIcon from './components/ChatIcon';
 import ChatWindow from './components/ChatWindow';
 import AllNotifications from './pages/AllNotifications';
 
+
 const App = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -27,6 +28,7 @@ const App = () => {
 
     return (
         <div className='mx-4 sm:mx-[10%]'>
+            
             <ToastContainer />
             <Navbar />
             <Routes>
