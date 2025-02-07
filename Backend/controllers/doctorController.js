@@ -54,7 +54,7 @@ const loginDoctor = async (req, res) => {
 // API to get doctor appointments for doctor panel
 const appointmentsDoctor = async (req, res) => {
     try {
-        const docId = req.user._id; // Use the authenticated user's ID
+        const docId = req.docId; // Use the authenticated user's ID
         const appointments = await appointmentModel.find({ docId });
         res.json({ success: true, appointments });
     } catch (error) {
@@ -103,4 +103,41 @@ const appointmentCancel = async (req, res) => {
     }
 };
 
-export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor, appointmentComplete, appointmentCancel };
+
+const doctorDashboard = async (req, res) => {
+    try {
+        const docId = req.docId;
+        console.log('Fetching dashboard data for doctor:', docId);
+        const appointments = await appointmentModel.find({ docId });
+        const totalAppointments = appointments.length;
+
+        let earnings = 0;
+        appointments.forEach((item) => {
+            if (item.isCompleted || item.payment) {
+                earnings += item.amount;
+            }
+        });
+
+        let patients = [];
+        appointments.forEach((item) => {
+            if (!patients.includes(item.userId)) {
+                patients.push(item.userId);
+            }
+        });
+
+        const dashData = {
+            earnings,
+            appointments: totalAppointments,
+            patients: patients.length,
+            latestAppointments: appointments.reverse().slice(0, 5)
+        };
+
+        console.log('Dashboard data:', dashData);
+        res.json({ success: true, dashData });
+    } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
+export { changeAvailability, doctorList, loginDoctor, appointmentsDoctor, appointmentComplete, appointmentCancel, doctorDashboard };

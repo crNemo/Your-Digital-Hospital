@@ -5,24 +5,28 @@ const authDoctor = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            console.log('Authorization header missing or invalid');
             return res.status(401).json({ success: false, message: "Not Authorized, Login Again" });
         }
 
-        const dtoken = authHeader.split(' ')[1];
-        if (!dtoken) {
+        const token = authHeader.split(' ')[1];
+        if (!token) {
+            console.log('Token missing');
             return res.status(401).json({ success: false, message: "Not Authorized, Login Again" });
         }
 
-        const token_decode = jwt.verify(dtoken, process.env.JWT_SECRET);
-        const doctor = await Doctor.findById(token_decode.id).select('-password');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const doctor = await Doctor.findById(decoded.id).select('-password');
         if (!doctor) {
+            console.log('Doctor not found');
             return res.status(401).json({ success: false, message: "Not Authorized, Login Again" });
         }
 
-        req.user = doctor;
+        req.docId = doctor._id; // Set req.docId to the doctor's _id
+        console.log('Doctor authenticated:', req.docId);
         next();
     } catch (error) {
-        console.log('Error in authDoctor middleware:', error);
+        console.error('Error in authDoctor middleware:', error);
         if (error.name === 'TokenExpiredError') {
             return res.status(401).json({ success: false, message: "Session expired. Please log in again." });
         }
