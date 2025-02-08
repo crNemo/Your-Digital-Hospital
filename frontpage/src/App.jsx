@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ChatIcon from './components/ChatIcon';
 import ChatWindow from './components/ChatWindow';
 import AllNotifications from './pages/AllNotifications';
-
+import IndividualNotification from './pages/IndividualNotification';
 
 const App = () => {
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -44,6 +44,8 @@ const App = () => {
                 <Route path='/bed' element={<Bed />} />
                 <Route path='/bed-appointment/:bedId' element={<BedAppointment />} />
                 <Route path='/all-notifications' element={<AllNotifications />} />
+                <Route path='/notifications/:id' element={<IndividualNotification/>}/>
+
             </Routes>
             <ChatIcon onClick={toggleChat} />
             {isChatOpen && <ChatWindow onClose={toggleChat} />}
