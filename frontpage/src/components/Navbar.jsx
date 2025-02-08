@@ -29,7 +29,7 @@ const Navbar = () => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/notification');
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notification`);
                 const responseJson = await response.json();
 
                 const storedReadStatus = JSON.parse(localStorage.getItem('readNotifications')) || [];

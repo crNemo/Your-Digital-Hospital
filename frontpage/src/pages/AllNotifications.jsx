@@ -13,7 +13,7 @@ const AllNotifications = () => {
 
     useEffect(() => {
         const setUserName = async () => {
-            const response = await fetch('http://localhost:4000/api/user/get-profile', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/get-profile`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const userData = await response.json();
@@ -22,7 +22,7 @@ const AllNotifications = () => {
 
         const fetchNotifications = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/notification');
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/notification`);
                 const responseJson = await response.json();
                 setNotifications(responseJson);
                 setLoading(false);

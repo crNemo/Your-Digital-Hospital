@@ -17,7 +17,7 @@ function IndividualNotification() {
 
         const setUserName = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/user/get-profile', {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/get-profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const userData = await response.json();
@@ -29,7 +29,7 @@ function IndividualNotification() {
 
         const fetchComments = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/get-comments', {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-comments`, {
                     method: 'GET',
                     headers: { id: id }
                 });
@@ -62,7 +62,7 @@ function IndividualNotification() {
     
             console.log('Sending payload:', payload);
     
-            const response = await fetch('http://localhost:4000/api/comment', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/comment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
