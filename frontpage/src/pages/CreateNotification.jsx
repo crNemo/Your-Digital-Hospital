@@ -6,10 +6,12 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
 
     let ParsedData = {
         "title": "",
         "body": "",
+        "user":""
     }
 
     const onSubmitHandler = async (event) => {
@@ -46,6 +48,13 @@ const Login = () => {
 
                 <button className='bg-primary text-white w-full py-2 rounded-mg text-base cursor-pointer hover:bg-blue-600 active:bg-primary' onClick={async () => {
                     toast.success('Notification Sent');
+                   const response =  await (await fetch('http://localhost:4000/api/user/get-profile',{ headers: { Authorization: `Bearer ${token}` }    })).json()
+                   if (response.success){
+
+                    console.log(response.userData.name)
+                    ParsedData.user = response.userData.name
+                   }
+                  
                     await fetch('http://localhost:4000/api/create', {
                         method: "POST",
                         headers: {
@@ -53,6 +62,8 @@ const Login = () => {
                         },
                         body: JSON.stringify(ParsedData)
                     })
+
+
                 }}>
                     Post
                 </button>

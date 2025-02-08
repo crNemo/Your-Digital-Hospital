@@ -41,7 +41,9 @@ const AllNotifications = () => {
                             <p className="text-gray-700 mt-2">{notification.body}</p>
                             <p className="mt-4 text-sm text-gray-500">
                                 Posted at: {new Date(notification.date).toLocaleString()}
+                                
                             </p>
+
                         </div>
                     ))}
                 </div>

@@ -43,19 +43,37 @@ app.get('/api/notification', async (req, res) => {
 });
 
 app.post('/api/create', async (req, res) => {
-    const { title, body } = req.body;
+    const { title, body,user } = req.body;
 
     const DataToSave = {
         title,
         body,
         date: Date.now(),
+        user
     };
 
     const SavedInfo = new notificationDB(DataToSave);
     await SavedInfo.save();
     res.status(201).json({ message: 'Notification created successfully' });
 });
+app.post('/api/comment',async(req,res)=>{
+    const {id,user,comment} = req.body
+    console.log(user)
+    if (id &&user &&comment){
+        await notificationDB.updateOne(
+            {_id:id},
+            {$push:{comments:{user:user,comment:comment}}}
+        )
+    }
+})
 
+app.get('/api/get-comments',async(req,res)=>{
+    const id = req.headers.id
+    const AllComments = await notificationDB.findById(id,"comments")
+    if (AllComments){
+        res.send(AllComments)
+    }
+})
 // Initialize Gemini API
 const genAI = new GoogleGenerativeAI(googleAPIKey);
 const model = genAI.getGenerativeModel({ model: "gemini-pro"});

@@ -98,11 +98,19 @@ function BellIcon({ notifications, unreadCount, markAsRead, markAllAsRead }) {
                 className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition-all ease-in-out duration-200 transform hover:scale-105 ${
                   notification.read ? 'bg-gray-100' : ''
                 }`}
-                onClick={() => markAsRead(notification._id)}
+                onClick={() => {markAsRead(notification._id)
+                  navigate(`/notifications/${notification._id}`,{
+                    state:{title:notification.title,body:notification.body,user:notification.user,id:notification._id}
+                  })
+                }}
               >
+                
+                <p className="text-amber-700 underline font-medium ">@{notification.user}</p>
+
                 <p className="text-gray-900 font-medium">{notification.title}</p>
                 <p className="text-gray-600 text-sm break-words whitespace-normal">{notification.body}</p>
                 <p className="text-xs text-gray-500">{new Date(notification.date).toLocaleString()}</p>
+
               </div>
             ))
           )}
