@@ -107,7 +107,6 @@ const appointmentCancel = async (req, res) => {
 const doctorDashboard = async (req, res) => {
     try {
         const docId = req.docId;
-        console.log('Fetching dashboard data for doctor:', docId);
         const appointments = await appointmentModel.find({ docId });
         const totalAppointments = appointments.length;
 

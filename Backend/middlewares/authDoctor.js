@@ -5,7 +5,6 @@ const authDoctor = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            console.log('Authorization header missing or invalid');
             return res.status(401).json({ success: false, message: "Not Authorized, Login Again" });
         }
 
