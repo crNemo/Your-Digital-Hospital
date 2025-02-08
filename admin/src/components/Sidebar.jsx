@@ -1,70 +1,69 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { AdminContext } from '../context/AdminContext'
 import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
-import { useContext } from 'react'
 import { DoctorContext } from '../context/DoctorContext'
 
 const Sidebar = () => {
-
-    const {aToken} = useContext(AdminContext)
-    const {dToken} = useContext(DoctorContext)
+    const { aToken } = useContext(AdminContext)
+    const { dToken } = useContext(DoctorContext)
 
     return (
-        <div className='min-h-screen bg-white border-r-none'>
-            {
-                aToken && <ul className='text-[#515151] mt-5'>
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/admin-dashboard'}>
-                        <img src={assets.home_icon} alt="" />
-                        <p>Dashboard</p>
+        <div className="min-h-screen bg-white shadow-md p-4 rounded-r-xl">
+            {/* Admin Sidebar */}
+            {aToken && (
+                <ul className='text-gray-700 mt-5'>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/admin-dashboard'}>
+                        <img src={assets.home_icon} alt="" className="w-6" />
+                        <p className='font-semibold'>Dashboard</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/all-appointments'}>
-                        <img src={assets.appointment_icon} alt="" />
-                        <p>Appointments</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/all-appointments'}>
+                        <img src={assets.appointment_icon} alt="" className="w-6" />
+                        <p className='font-semibold'>Appointments</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-doctors'}>
-                        <img src={assets.add_icon} alt="" />
-                        <p>Add Doctor</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/add-doctors'}>
+                        <img src={assets.add_icon} alt="" className="w-6" />
+                        <p className='font-semibold'>Add Doctor</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-list'}>
-                        <img src={assets.people_icon} alt="" />
-                        <p>Doctors List</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/doctor-list'}>
+                        <img src={assets.people_icon} alt="" className="w-6" />
+                        <p className='font-semibold'>Doctors List</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/add-beds'}>
-                        <img src={assets.add_icon} alt="" />
-                        <p>Add Bed</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/add-beds'}>
+                        <img src={assets.add_icon} alt="" className="w-6" />
+                        <p className='font-semibold'>Add Bed</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/bed-list'}>
-                        <img src={assets.people_icon} alt="" />
-                        <p>Bed List</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/bed-list'}>
+                        <img src={assets.people_icon} alt="" className="w-6" />
+                        <p className='font-semibold'>Bed List</p>
                     </NavLink>
-
                 </ul>
-            }
-            {
-                dToken && <ul className='text-[#515151] mt-5'>
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-dashboard'}>
-                        <img src={assets.home_icon} alt="" />
-                        <p className='hidden md:block'>Dashboard</p>
+            )}
+
+            {/* Doctor Sidebar */}
+            {dToken && (
+                <ul className='text-gray-700 mt-5'>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/doctor-dashboard'}>
+                        <img src={assets.home_icon} alt="" className="w-6" />
+                        <p className='hidden md:block font-semibold'>Dashboard</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-appointments'}>
-                        <img src={assets.appointment_icon} alt="" />
-                        <p className='hidden md:block'>Appointments</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/doctor-appointments'}>
+                        <img src={assets.appointment_icon} alt="" className="w-6" />
+                        <p className='hidden md:block font-semibold'>Appointments</p>
                     </NavLink>
 
-                    <NavLink className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive? 'bg-[#F2F3FF] border-r-4 border-primary' : ''}`} to={'/doctor-profile'}>
-                        <img src={assets.people_icon} alt="" />
-                        <p className='hidden md:block'>Call Patient</p>
+                    <NavLink className={({ isActive }) => `flex items-center gap-4 py-3 px-6 cursor-pointer transition-all duration-300 ease-in-out ${isActive ? 'bg-[#E8F4FF] text-blue-700 rounded-xl shadow-md' : 'hover:bg-[#E8F4FF] hover:text-blue-700 rounded-xl'}`} to={'/doctor-profile'}>
+                        <img src={assets.people_icon} alt="" className="w-6" />
+                        <p className='hidden md:block font-semibold'>Call Patient</p>
                     </NavLink>
-
                 </ul>
-            }
+            )}
         </div>
     )
 }

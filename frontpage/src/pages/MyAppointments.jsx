@@ -141,7 +141,7 @@ const MyAppointment = () => {
             </div>
            {calling && (
                 <iframe
-                    style={{ width: '800px', height: '600px' }}  // Adjust size as needed
+                className='w-full h-[80vh] rounded-lg shadow'  // Adjust size as needed
                     src={`https://meet.jit.si/${roomName}`}   // Use public Jitsi Meet server
                     allow="camera; microphone; fullscreen; display-capture"
                     onLoad={handleJitsiIframeLoad}

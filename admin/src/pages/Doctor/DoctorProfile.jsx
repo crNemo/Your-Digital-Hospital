@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import socketIOClient from "socket.io-client";
 import { AppContext } from '../../context/AppContext';
 import { assets } from '../../assets/assets';
+import { CSSTransition } from 'react-transition-group'; // Import transition wrapper
 
 const DoctorProfile = () => {
   const { backendUrl, dToken, appointments, getAppointments } = useContext(DoctorContext);
@@ -48,47 +49,55 @@ const DoctorProfile = () => {
   };
 
   return (
-    <div className="w-full h-screen flex flex-col bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full h-full overflow-y-auto">
-        <h2 className="text-3xl font-semibold text-center mb-6">Doctor Profile</h2>
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Upcoming Appointments</h3>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            {appointments.slice().reverse().map((appointment, index) => (
-              <div key={appointment._id} className="flex justify-between items-center p-4 border-b border-gray-300 hover:bg-gray-100">
-                <div className="flex items-center gap-3">
-                  <img className="w-10 h-10 rounded-full" src={appointment.userData.image || assets.user_icon} alt="User" />
-                  <p className="text-gray-700">{appointment.userData.name} - {slotDateFormat(appointment.slotDate)} - {appointment.slotTime}</p>
+    <CSSTransition in={true} timeout={300} classNames="page" unmountOnExit>
+      <div className="w-full h-screen flex flex-col bg-gray-50 p-4"> {/* Light background */}
+        <div className="bg-white shadow-xl rounded-2xl p-6 w-full h-full overflow-y-auto">
+          <h2 className="text-4xl font-extrabold text-gray-800 mb-6">Doctor Profile</h2>
+          
+          <div className="mb-8">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Upcoming Appointments</h3>
+            
+            <div className="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg shadow-lg p-4">
+              {appointments.slice().reverse().map((appointment, index) => (
+                <div key={appointment._id} className="flex justify-between items-center p-4 border-b border-gray-300 hover:bg-gray-50 rounded-lg transform transition-all hover:scale-105">
+                  <div className="flex items-center gap-3">
+                    <img className="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md" src={appointment.userData.image || assets.user_icon} alt="User" />
+                    <p className="text-gray-700 font-medium">{appointment.userData.name} - {slotDateFormat(appointment.slotDate)} - {appointment.slotTime}</p>
+                  </div>
+                  {!appointment.cancelled ? (
+                    <button
+                      onClick={() => startCall(appointment)}
+                      className="bg-gradient-to-r from-green-400 to-green-600 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out hover:bg-green-500"
+                      disabled={calling}
+                    >
+                      {calling ? 'Calling...' : 'Call Patient'}
+                    </button>
+                  ) : (
+                    <span className="text-red-500 font-semibold">Cancelled</span>
+                  )}
                 </div>
-                {!appointment.cancelled ? (
-                  <button
-                    onClick={() => startCall(appointment)}
-                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-50"
-                    disabled={calling}
-                  >
-                    {calling ? 'Calling...' : 'Call Patient'}
-                  </button>
-                ) : (
-                  <span className="text-red-500 font-semibold">Cancelled</span>
-                )}
+              ))}
+            </div>
+          </div>
+
+          {calling && (
+            <div className="mt-6">
+              <h3 className="text-xl font-semibold mb-2 text-gray-800">Video Call</h3>
+              <div className="w-full h-[80vh] flex justify-center items-center bg-black rounded-lg shadow-lg overflow-hidden">
+                <iframe
+                  className="w-full h-full"
+                  src={`https://meet.jit.si/${roomName}`}
+                  allow="camera; microphone; fullscreen; display-capture"
+                  title="Jitsi Meet"
+                />
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+          
+          <Toaster />
         </div>
-        {calling && (
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Video Call</h3>
-            <iframe
-              className="w-full h-[80vh] rounded-lg shadow"
-              src={`https://meet.jit.si/${roomName}`}
-              allow="camera; microphone; fullscreen; display-capture"
-              title="Jitsi Meet"
-            />
-          </div>
-        )}
-        <Toaster />
       </div>
-    </div>
+    </CSSTransition>
   );
 };
 

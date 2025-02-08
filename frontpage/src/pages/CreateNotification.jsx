@@ -14,37 +14,49 @@ const Login = () => {
         "user":""
     }
 
+const NotificationForm = () => {
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-        // Add your form submission logic here
+        toast.success('Notification Sent');
+        await fetch('http://localhost:4000/api/create', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title, body })
+        });
     };
 
     return (
-        <form onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
-            <div className='flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-x1 text-zinc-600 text-sm shadow-lg'>
-                <p className='text-2xl font-semibold'>Fill out this form for notification</p>
-                {state === 'Sign Up' && (
-                    <div className='w-full'>
-                        <p>Enter Title</p>
-                        <input
-                            className='border border-zinc-30 rounded w-full p-2 mt-1'
-                            type="text"
-                            onChange={(e) => ParsedData.title = e.target.value}
-
-
-                            required
-
-                        />
-                    </div>
-                )}
-                <div className='w-full'>
-                    <p>Body</p>
-                    <textarea
-                        className='border border-zinc-30 rounded w-full p-2 mt-1 h-[200px] overflow-y-auto'
-                        onChange={(e) => ParsedData.body = e.target.value}
+        <form onSubmit={onSubmitHandler} className='min-h-screen flex items-center justify-center px-4 bg-gradient-to-r from-white via-gray-100 to-white'>
+            <Toaster />
+            <div className='bg-white text-gray-800 flex flex-col gap-6 p-10 w-full max-w-md border border-gray-300 rounded-xl shadow-xl transform transition duration-500 hover:scale-105'>
+                <h2 className='text-3xl font-extrabold text-center text-[#5f6FFF]'>Notification Form</h2>
+                <p className='text-center text-gray-500'>Fill out this form to send a notification</p>
+                
+                <div>
+                    <label className='block text-sm font-medium text-gray-600'>Title</label>
+                    <input
+                        className='border border-gray-300 rounded w-full p-2 mt-1 focus:ring focus:ring-[#5f6FFF] bg-gray-50 text-gray-800'
+                        type='text'
+                        onChange={(e) => setTitle(e.target.value)}
+                        value={title}
                         required
                     />
                 </div>
+                
+                <div>
+                    <label className='block text-sm font-medium text-gray-600'>Body</label>
+                    <textarea
+                        className='border border-gray-300 rounded w-full p-2 mt-1 focus:ring focus:ring-[#5f6FFF] bg-gray-50 text-gray-800 h-32'
+                        onChange={(e) => setBody(e.target.value)}
+                        value={body}
+                        required
+                    />
+                </div>
+
 
                 <button className='bg-primary text-white w-full py-2 rounded-mg text-base cursor-pointer hover:bg-blue-600 active:bg-primary' onClick={async () => {
                     toast.success('Notification Sent');
@@ -66,11 +78,15 @@ const Login = () => {
 
                 }}>
                     Post
+                <button 
+                    type='submit' 
+                    className='bg-[#5f6FFF] text-white w-full py-2 rounded-md text-base font-semibold disabled:opacity-50 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-[#4a5ad4]'
+                >
+                    Send Notification
                 </button>
-
             </div>
         </form>
     );
 };
 
-export default Login;
+export default NotificationForm;
