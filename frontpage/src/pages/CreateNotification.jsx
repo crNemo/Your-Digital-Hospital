@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-const Login = () => {
-    const [state, setState] = useState('Sign Up');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
-
-    let ParsedData = {
-        "title": "",
-        "body": "",
-        "user":""
-    }
-
 const NotificationForm = () => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
+
+    let ParsedData = {
+        "title": title,
+        "body": body,
+        "user": ""
+    };
+
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         toast.success('Notification Sent');
+        const response = await (await fetch('http://localhost:4000/api/user/get-profile', { headers: { Authorization: `Bearer ${token}` } })).json();
+        if (response.success) {
+            console.log(response.userData.name);
+            ParsedData.user = response.userData.name;
+        }
+
         await fetch('http://localhost:4000/api/create', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ title, body })
+            body: JSON.stringify(ParsedData)
         });
     };
 
@@ -57,27 +58,6 @@ const NotificationForm = () => {
                     />
                 </div>
 
-
-                <button className='bg-primary text-white w-full py-2 rounded-mg text-base cursor-pointer hover:bg-blue-600 active:bg-primary' onClick={async () => {
-                    toast.success('Notification Sent');
-                   const response =  await (await fetch('http://localhost:4000/api/user/get-profile',{ headers: { Authorization: `Bearer ${token}` }    })).json()
-                   if (response.success){
-
-                    console.log(response.userData.name)
-                    ParsedData.user = response.userData.name
-                   }
-                  
-                    await fetch('http://localhost:4000/api/create', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(ParsedData)
-                    })
-
-
-                }}>
-                    Post
                 <button 
                     type='submit' 
                     className='bg-[#5f6FFF] text-white w-full py-2 rounded-md text-base font-semibold disabled:opacity-50 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-[#4a5ad4]'

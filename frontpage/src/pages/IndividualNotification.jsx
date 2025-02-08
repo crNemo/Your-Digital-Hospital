@@ -1,78 +1,117 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+
 function IndividualNotification() {
-    const location = useLocation()
-    const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
-    const [user,setUser] = useState('')
-    const [comment,setComment] = useState('')
-    const data = location.state
-    const id = data.id
-    const [FetchedComments,setCommento]= useState([])
+    const location = useLocation();
+    const [token, setToken] = useState(localStorage.getItem('token') || false);
+    const [user, setUser] = useState('');
+    const [comment, setComment] = useState('');
+    const [fetchedComments, setFetchedComments] = useState([]);
+    const data = location.state;
+    const id = data.id;
 
-    
-    
-    
-    useEffect(()=>{
-        console.log("Pagee changedd")
-        const setUserName = async()=>{
-            const response =  await (await fetch('http://localhost:4000/api/user/get-profile',{ headers: { Authorization: `Bearer ${token}` }    })).json()
-            setUser(response.userData.name)
-           
+    useEffect(() => {
+        const setUserName = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/api/user/get-profile', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const userData = await response.json();
+                setUser(userData.userData.name);
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+                toast.error('Failed to fetch user profile');
+            }
+        };
 
+        const fetchComments = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/api/get-comments', {
+                    method: 'GET',
+                    headers: { id: id }
+                });
+                const receivedData = await response.json();
+                setFetchedComments(receivedData.comments);
+            } catch (error) {
+                console.error('Error fetching comments:', error);
+                toast.error('Failed to fetch comments');
+            }
+        };
+
+        setUserName();
+        fetchComments();
+
+        const intervalId = setInterval(fetchComments, 1000); // Fetch comments every second
+
+        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, [id, token]);
+
+    const handleCommentSubmit = async () => {
+        if (!comment.trim()) return;
+        try {
+            const payload = { id, user, comment };
+            
+            const response = await fetch('http://localhost:4000/api/comment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            
+            
+            if (response.ok) {
+                toast.success('Comment posted successfully'); // Display success toast
+                setComment('');
+                fetchComments(); // Refresh comments after posting
+            } else {
+                toast.error('Failed to post comment');  // Display error toast
+            }
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            toast.error('Failed to post comment'); // Display error toast
         }
+    };
 
-        const setFetchedComments = async()=>{
-            const response = await fetch('http://localhost:4000/api/get-comments',{
-                method:'GET',
-                headers:{
-                    id:id
-                }
-            })
+    return (
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-gray-900 p-6">
+            <Toaster position="top-right" reverseOrder={false} />
+            <div className="w-full max-w-2xl bg-white p-6 rounded-xl shadow-lg border border-gray-300">
+                {data.title ? (
+                    <h1 className="text-3xl font-bold text-blue-600">{data.title} <span className="text-sm text-gray-500">(Posted by: {data.user})</span></h1>
+                ) : (
+                    <h1 className="text-3xl font-bold text-red-500">Failed to load</h1>
+                )}
+                <p className="mt-3 text-gray-700">{data.body || 'Failed to load'}</p>
+            </div>
 
-            const RecievedData = await response.json()
-            console.log(RecievedData)
-            setCommento([RecievedData.comments])
-        }
-        setFetchedComments()
-        setUserName()
-        
-    },[id,token])
-  return (
-    <div>
-        {data.title? <h1 className='text-3xl'>{data.title} (Posted by: {data.user})</h1>:<h1 className='text-3xl'>Failed to load</h1>}
-        {data.body? <p>{data.body}</p>:<p>Failed to load</p>}
+            <div className="mt-6 w-full max-w-2xl flex gap-3">
+                <input 
+                    type="text"
+                    placeholder="Enter your comment"
+                    className="flex-1 p-3 rounded-lg bg-gray-200 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-400"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                />
+                <button 
+                    className="bg-blue-500 px-4 py-2 rounded-lg font-bold text-white hover:bg-blue-400 transition"
+                    onClick={handleCommentSubmit}
+                >
+                    Post
+                </button>
+            </div>
 
-        <input placeholder='Enter your comment' className=' border-b-2' onChange={(e)=>setComment(e.target.value)} onBlur={async()=>{
-
-                    console.log(user+"okk")
-                    await fetch('http://localhost:4000/api/comment', {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            id:id,
-                            user:user,
-                            comment:comment
-                        })
-                    })
-        }}/>
-
-        <h1>Comments</h1>
-        
-        {
-            FetchedComments.map((e)=>(
-                e.map((innerE)=>(
-                    <div>
-                        <h1>@{innerE.user}</h1>
-                        <p>{innerE.comment}</p>
+            <h1 className="mt-6 text-2xl font-semibold text-blue-600">Comments</h1>
+            <div className="w-full max-w-2xl mt-4 space-y-3">
+                {fetchedComments.slice().reverse().map(comment => (
+                    <div key={comment.id} className="bg-gray-100 p-4 rounded-lg border border-gray-300">
+                        <h1 className="font-semibold text-blue-500">@{comment.user}</h1>
+                        <p className="text-gray-700">{comment.comment}</p>
                     </div>
-                
-                ))
-            ))
-        }
-    </div>
-  )
+                ))}
+            </div>
+        </div>
+    );
 }
 
-export default IndividualNotification
+export default IndividualNotification;
