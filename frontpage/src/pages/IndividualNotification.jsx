@@ -50,59 +50,41 @@ function IndividualNotification() {
     }, [id, token]);
 
     const handleCommentSubmit = async () => {
+
         if (!comment.trim()) return;
+
+
+
+
         if (!token) {
             toast.error('Login to post comment');
             navigate('/login');
             window.scrollTo(0, 0);
             return;
         }
+
         try {
+
             const payload = { id, user, comment };
-    
+            // toast.success('Comment Posted')
             console.log('Sending payload:', payload);
-    
+
+
             const response = await fetch('http://localhost:4000/api/comment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-    
-            console.log('Response received');
-    
-            // Check if the response is not empty
-            if (!response) {
-                console.error('No response received');
-                toast.error('Failed to post comment');
-                return;
-            }
-    
-            // Log the response object
-            console.log('Response object:', response);
-    
-            // Check if the response status is not OK
-            if (!response.ok) {
-                console.error('Response status not OK:', response.status);
-                toast.error('Failed to post comment');
-                return;
-            }
-    
-            const responseData = await response.json();
-            console.log('Response status:', response.status);
-            console.log('Response data:', responseData);
-    
-            if (response.status === 200) {
-                console.log('Comment posted successfully');
-                toast.success('Comment posted successfully'); // Display success toast
-                setComment('');
-                fetchComments(); // Refresh comments after posting
-            } else {
-                toast.error('Failed to post comment');  // Display error toast
-            }
+
+
+
+
+
         } catch (error) {
             console.error('Error posting comment:', error);
             toast.error('Failed to post comment'); // Display error toast
         }
+
     };
 
     return (
@@ -128,6 +110,7 @@ function IndividualNotification() {
                 <button
                     className="bg-blue-500 px-4 py-2 rounded-lg font-bold text-white hover:bg-blue-400 transition"
                     onClick={handleCommentSubmit}
+
                 >
                     Post
                 </button>

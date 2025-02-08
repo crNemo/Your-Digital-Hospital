@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const NotificationForm = () => {
+    const navigate = useNavigate()
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
@@ -13,7 +15,14 @@ const NotificationForm = () => {
     };
 
     const onSubmitHandler = async (event) => {
+        
         event.preventDefault();
+        if (!token) {
+            toast.error('Login to post comment');
+            navigate('/login');
+            window.scrollTo(0, 0);
+            return;
+        }
         toast.success('Notification Sent');
         const response = await (await fetch('http://localhost:4000/api/user/get-profile', { headers: { Authorization: `Bearer ${token}` } })).json();
         if (response.success) {
@@ -28,6 +37,7 @@ const NotificationForm = () => {
             },
             body: JSON.stringify(ParsedData)
         });
+        
     };
 
     return (
