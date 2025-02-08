@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { Navigate } from 'react-router-dom';
 
 function IndividualNotification() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [token, setToken] = useState(localStorage.getItem('token') || false);
     const [user, setUser] = useState('');
     const [comment, setComment] = useState('');
@@ -12,6 +14,7 @@ function IndividualNotification() {
     const id = data.id;
 
     useEffect(() => {
+
         const setUserName = async () => {
             try {
                 const response = await fetch('http://localhost:4000/api/user/get-profile', {
@@ -20,8 +23,7 @@ function IndividualNotification() {
                 const userData = await response.json();
                 setUser(userData.userData.name);
             } catch (error) {
-                console.error('Error fetching user profile:', error);
-                toast.error('Failed to fetch user profile');
+                console.log("Error fetching user data:");
             }
         };
 
@@ -49,18 +51,48 @@ function IndividualNotification() {
 
     const handleCommentSubmit = async () => {
         if (!comment.trim()) return;
+        if (!token) {
+            toast.error('Login to post comment');
+            navigate('/login');
+            window.scrollTo(0, 0);
+            return;
+        }
         try {
             const payload = { id, user, comment };
-            
+    
+            console.log('Sending payload:', payload);
+    
             const response = await fetch('http://localhost:4000/api/comment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            
-            
-            
-            if (response.ok) {
+    
+            console.log('Response received');
+    
+            // Check if the response is not empty
+            if (!response) {
+                console.error('No response received');
+                toast.error('Failed to post comment');
+                return;
+            }
+    
+            // Log the response object
+            console.log('Response object:', response);
+    
+            // Check if the response status is not OK
+            if (!response.ok) {
+                console.error('Response status not OK:', response.status);
+                toast.error('Failed to post comment');
+                return;
+            }
+    
+            const responseData = await response.json();
+            console.log('Response status:', response.status);
+            console.log('Response data:', responseData);
+    
+            if (response.status === 200) {
+                console.log('Comment posted successfully');
                 toast.success('Comment posted successfully'); // Display success toast
                 setComment('');
                 fetchComments(); // Refresh comments after posting
@@ -86,14 +118,14 @@ function IndividualNotification() {
             </div>
 
             <div className="mt-6 w-full max-w-2xl flex gap-3">
-                <input 
+                <input
                     type="text"
                     placeholder="Enter your comment"
                     className="flex-1 p-3 rounded-lg bg-gray-200 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-400"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                 />
-                <button 
+                <button
                     className="bg-blue-500 px-4 py-2 rounded-lg font-bold text-white hover:bg-blue-400 transition"
                     onClick={handleCommentSubmit}
                 >

@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import "tailwindcss";
 
+
+
+body {
+    background-color: #f0f4f8; /* Light gray background */
+}
 .nav-item {
     position: relative;
     padding: 1rem 0;
