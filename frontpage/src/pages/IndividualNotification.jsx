@@ -17,7 +17,7 @@ function IndividualNotification() {
 
         const setUserName = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/user/get-profile', {
+                const response = await fetch(`http://localhost:4000/api/user/get-profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 const userData = await response.json();
@@ -29,7 +29,7 @@ function IndividualNotification() {
 
         const fetchComments = async () => {
             try {
-                const response = await fetch('http://localhost:4000/api/get-comments', {
+                const response = await fetch(`http://localhost:4000/api/get-comments`, {
                     method: 'GET',
                     headers: { id: id }
                 });
@@ -68,6 +68,7 @@ function IndividualNotification() {
             const payload = { id, user, comment };
             // toast.success('Comment Posted')
             console.log('Sending payload:', payload);
+
 
 
             const response = await fetch('http://localhost:4000/api/comment', {

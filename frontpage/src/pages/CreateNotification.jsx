@@ -24,7 +24,7 @@ const NotificationForm = () => {
             return;
         }
         toast.success('Notification Sent');
-        const response = await (await fetch('http://localhost:4000/api/user/get-profile', { headers: { Authorization: `Bearer ${token}` } })).json();
+        const response = await (await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/get-profile`, { headers: { Authorization: `Bearer ${token}` } })).json();
         if (response.success) {
             console.log(response.userData.name);
             ParsedData.user = response.userData.name;

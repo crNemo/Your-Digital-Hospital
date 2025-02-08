@@ -14,7 +14,7 @@ const ChatWindow = ({ onClose }) => {
     const handleMessageSubmit = async (message) => {
         setMessages([...messages, { text: message, sender: 'You' }]);
 
-        fetch('http://localhost:4000/api/recognize', {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/recognize`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message })
